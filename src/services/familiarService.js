@@ -1,7 +1,6 @@
-import API from "./axiosConfig"; 
-import axios from "axios";
+import API from "./axiosConfig";
 
-const API_URL = "/familiares"; 
+const API_URL = "/familiares";
 
 const getFamiliares = async () => {
     const response = await API.get(API_URL);
@@ -15,17 +14,17 @@ const getFamiliarById = async (id) => {
 
 const addFamiliar = async (familiarData) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/familiares", familiarData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      return response.data;
+        const response = await API.post(API_URL, familiarData, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data;
     } catch (error) {
-      console.error("Error al registrar familiar:", error);
-      throw error;
+        console.error("Error al registrar familiar:", error);
+        throw error;
     }
-  };
+};
 
 const updateFamiliar = async (id, familiarData) => {
     const response = await API.put(`${API_URL}/${id}`, familiarData);
@@ -43,4 +42,3 @@ export default {
     updateFamiliar,
     deleteFamiliar,
 };
-

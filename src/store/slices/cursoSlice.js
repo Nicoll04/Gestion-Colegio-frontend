@@ -6,31 +6,57 @@ import {
   deleteCursoService,
 } from "../../services/cursoService";
 
-// Thunks para realizar peticiones al backend
-export const fetchCursos = createAsyncThunk("cursos/fetchCursos", async (_, { rejectWithValue }) => {
-  try {
-    const response = await fetchCursosService();
-    return response;
-  } catch (error) {
-    return rejectWithValue(error.message);
+// Obtener todos los cursos
+export const fetchCursos = createAsyncThunk(
+  "cursos/fetchCursos",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchCursosService();
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
+// Agregar nuevo curso
+export const addCurso = createAsyncThunk(
+  "cursos/addCurso",
+  async (curso, { rejectWithValue }) => {
+    try {
+      const response = await addCursoService(curso);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
-export const addCurso = createAsyncThunk("cursos/addCurso", async (curso) => {
-  const response = await addCursoService(curso);
-  return response;
-});
+// Actualizar curso existente
+export const updateCurso = createAsyncThunk(
+  "cursos/updateCurso",
+  async ({ id, cursoData }, { rejectWithValue }) => {
+    try {
+      const response = await updateCursoService(id, cursoData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
-export const updateCurso = createAsyncThunk("cursos/updateCurso", async ({ id, cursoData }) => {
-  const response = await updateCursoService(id, cursoData);
-  return response;
-});
-
-export const deleteCurso = createAsyncThunk("cursos/deleteCurso", async (id) => {
-  await deleteCursoService(id);
-  return id;
-});
+// Eliminar curso
+export const deleteCurso = createAsyncThunk(
+  "cursos/deleteCurso",
+  async (id, { rejectWithValue }) => {
+    try {
+      await deleteCursoService(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 // Slice de cursos
 const cursoSlice = createSlice({
@@ -45,6 +71,7 @@ const cursoSlice = createSlice({
     builder
       .addCase(fetchCursos.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchCursos.fulfilled, (state, action) => {
         state.loading = false;
@@ -63,7 +90,9 @@ const cursoSlice = createSlice({
         );
       })
       .addCase(deleteCurso.fulfilled, (state, action) => {
-        state.cursos = state.cursos.filter((curso) => curso.ID_Curso !== action.payload);
+        state.cursos = state.cursos.filter(
+          (curso) => curso.ID_Curso !== action.payload
+        );
       });
   },
 });

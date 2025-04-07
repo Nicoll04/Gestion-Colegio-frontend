@@ -120,6 +120,8 @@ const EstudiantesPage = () => {
   const editingId = queryParams.get("editar");
   const [selectedFile, setSelectedFile] = useState(null);
   const userRole = useSelector((state) => state.auth.rol);
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   const initialFormState = {
     ID_Curso: "",
@@ -190,31 +192,31 @@ const EstudiantesPage = () => {
     }
 
     try {
-        const response = await fetch(
-            `http://localhost:5000/api/estudiantes/${editingId ? editingId : ""}`, 
-            { 
-                method: editingId ? "PUT" : "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": token ? `Bearer ${token}` : ""
-                },
-                body: JSON.stringify(dataToSend),
-            }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.message || "Error en la solicitud al backend");
-        }
-
-        dispatch(fetchStudents());
-        setFormData(initialFormState);
-        setSelectedFile(null);
-    } catch (error) {
-        console.error("⛔ Error al enviar datos al backend:", error);
-        alert("Error al guardar el estudiante.");
-    }
+      const response = await fetch(
+          `${API_URL}/estudiantes/${editingId ? editingId : ""}`, 
+          { 
+              method: editingId ? "PUT" : "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": token ? `Bearer ${token}` : ""
+              },
+              body: JSON.stringify(dataToSend),
+          }
+      );
+  
+      const result = await response.json();
+  
+      if (!response.ok) {
+          throw new Error(result.message || "Error en la solicitud al backend");
+      }
+  
+      dispatch(fetchStudents());
+      setFormData(initialFormState);
+      setSelectedFile(null);
+  } catch (error) {
+      console.error("⛔ Error al enviar datos al backend:", error);
+      alert("Error al guardar el estudiante.");
+  }  
 };
 
 

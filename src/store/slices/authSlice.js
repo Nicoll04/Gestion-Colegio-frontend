@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import API from "../../services/axiosConfig"; // Usa tu config de Axios
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "/auth"; // Ya no necesitas poner localhost aquí
 
 // Acción asíncrona para iniciar sesión
 export const loginUser = createAsyncThunk("auth/login", async (userData, thunkAPI) => {
     try {
-        const response = await axios.post(`${API_URL}/login`, userData);
-        
+        const response = await API.post(`${API_URL}/login`, userData);
+
         // Guardar token y rol en localStorage
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRole", response.data.rol);
@@ -21,7 +21,7 @@ export const loginUser = createAsyncThunk("auth/login", async (userData, thunkAP
 // Acción asíncrona para registrar usuario
 export const registerUser = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
     try {
-        const response = await axios.post(`${API_URL}/register`, userData);
+        const response = await API.post(`${API_URL}/register`, userData);
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response.data);
@@ -33,7 +33,7 @@ const authSlice = createSlice({
     initialState: {
         user: null,
         token: localStorage.getItem("token") || null,
-        rol: localStorage.getItem("userRole") || null,  // Nuevo estado para el rol
+        rol: localStorage.getItem("userRole") || null,
         loading: false,
         error: null,
         successMessage: null,
@@ -42,7 +42,7 @@ const authSlice = createSlice({
         logout: (state) => {
             state.user = null;
             state.token = null;
-            state.rol = null;  // Limpiar el rol
+            state.rol = null;
             localStorage.removeItem("token");
             localStorage.removeItem("userRole");
         },
@@ -56,7 +56,7 @@ const authSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.token = action.payload.token;
-                state.rol = action.payload.rol;  // Guardar rol en Redux
+                state.rol = action.payload.rol;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;

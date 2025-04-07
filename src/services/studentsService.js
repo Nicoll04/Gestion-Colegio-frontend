@@ -1,6 +1,6 @@
 import API from "./axiosConfig";
 
-const API_URL = "/estudiantes"; 
+const API_URL = "/estudiantes";
 
 const studentsService = {
     // Obtener todos los estudiantes
@@ -17,13 +17,21 @@ const studentsService = {
 
     // Crear un nuevo estudiante
     addStudent: async (studentData) => {
-        const response = await API.post(API_URL, studentData);
+        const response = await API.post(API_URL, studentData, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         return response.data;
     },
 
     // Actualizar un estudiante
     updateStudent: async (id, studentData) => {
-        const response = await API.put(`${API_URL}/${id}`, studentData);
+        const response = await API.put(`${API_URL}/${id}`, studentData, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         return response.data;
     },
 
