@@ -4,6 +4,9 @@ import { loginUser } from "../store/slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import "../assets/Login.css";
 
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
+
 const Login = () => {
     const [correo, setCorreo] = useState("");
     const [contraseña, setContraseña] = useState("");
@@ -18,6 +21,34 @@ const Login = () => {
                 navigate("/dashboard");
             }
         });
+    };
+
+    const handleGoogleLogin = async (credentialResponse) => {
+        const googleToken = credentialResponse.credential;
+        const decoded = jwt_decode(googleToken);
+        console.log("Google user:", decoded);
+
+        try {
+            const res = await fetch("http://localhost:3000/auth/google-token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ googleToken }),
+            });
+
+            const data = await res.json();
+
+            if (data.token) {
+                localStorage.setItem("token", data.token);
+                navigate("/dashboard");
+            } else {
+                alert("Error al iniciar sesión con Google");
+            }
+        } catch (error) {
+            console.error("Error Google login:", error);
+            alert("Fallo el inicio de sesión con Google");
+        }
     };
 
     return (
@@ -47,6 +78,15 @@ const Login = () => {
                         </button>
                         {error && <p className="text-danger mt-2">{error}</p>}
                     </form>
+
+                    <hr />
+                    <div className="text-center">
+                        <GoogleLogin
+                            onSuccess={handleGoogleLogin}
+                            onError={() => console.log("Fallo el login con Google")}
+                        />
+                    </div>
+
                     <p className="mt-3 text-center">
                         ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
                     </p>
