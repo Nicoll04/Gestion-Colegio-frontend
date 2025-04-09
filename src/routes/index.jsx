@@ -15,7 +15,7 @@ import StudentTable from "../Componentes/studentTable";
 import FamiliaresTable from "../Componentes/FamiliarTable";
 import ProfesoresLista from "../Componentes/ProfesoresTable";
 import UnauthorizedPage from "../pages/Unauthorized"; 
-import SeleccionarRolPage from "../pages/SeleccionarRolPage";
+import SeleccionarRolPage from "../pages/SeleccionaRolPage";
 
 
 const AppRoutes = () => {
