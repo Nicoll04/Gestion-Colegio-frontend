@@ -46,6 +46,11 @@ const authSlice = createSlice({
             localStorage.removeItem("token");
             localStorage.removeItem("userRole");
         },
+        setAuth: (state, action) => {
+            state.token = action.payload.token;
+            state.rol = action.payload.rol;
+            state.user = action.payload.nombre || null;
+        },
     },
     extraReducers: (builder) => {
         builder

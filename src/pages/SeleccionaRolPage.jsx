@@ -2,10 +2,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/axiosConfig";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../store/slices/authSlice";
+
 
 const SeleccionarRolPage = () => {
     const [rolSeleccionado, setRolSeleccionado] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch(); 
 
     const handleSeleccionar = async () => {
         try {
@@ -20,6 +24,13 @@ const SeleccionarRolPage = () => {
             if (res.data.token) {
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("userRole", res.data.rol);
+
+                dispatch(setAuth({
+                    token: res.data.token,
+                    rol: res.data.rol,
+                    nombre: res.data.nombre || null
+                }));
+
                 navigate("/dashboard");
             }
         } catch (error) {
