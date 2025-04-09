@@ -40,10 +40,15 @@ const Login = () => {
     
             if (data.token) {
                 localStorage.setItem("token", data.token);
-                navigate("/dashboard");
-            } else {
-                alert("Error al iniciar sesión con Google");
+            
+                if (!data.rol) {
+                    navigate("/seleccionar-rol");
+                } else {
+                    localStorage.setItem("userRole", data.rol);
+                    navigate("/dashboard");
+                }
             }
+            
         } catch (error) {
             console.error("Error Google login:", error);
             alert("Fallo el inicio de sesión con Google");

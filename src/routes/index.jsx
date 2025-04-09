@@ -15,6 +15,8 @@ import StudentTable from "../Componentes/studentTable";
 import FamiliaresTable from "../Componentes/FamiliarTable";
 import ProfesoresLista from "../Componentes/ProfesoresTable";
 import UnauthorizedPage from "../pages/Unauthorized"; 
+import SeleccionarRolPage from "../pages/SeleccionarRolPage";
+
 
 const AppRoutes = () => {
   return (
@@ -24,6 +26,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        <Route path="/seleccionar-rol" element={<SeleccionarRolPage />} />
 
         {/* Rutas protegidas */}
         <Route path="/dashboard" element={

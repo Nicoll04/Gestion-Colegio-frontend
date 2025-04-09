@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import API from "../../services/axiosConfig"; // Usa tu config de Axios
+import API from "../../services/axiosConfig"; 
 
-const API_URL = "/auth"; // Ya no necesitas poner localhost aquí
+const API_URL = "/auth"; 
 
 // Acción asíncrona para iniciar sesión
 export const loginUser = createAsyncThunk("auth/login", async (userData, thunkAPI) => {
