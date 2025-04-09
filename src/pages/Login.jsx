@@ -29,7 +29,7 @@ const Login = () => {
         console.log("Google user:", decoded);
 
         try {
-            const res = await fetch("http://localhost:3000/auth/google-token", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/google-token`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -6,8 +6,7 @@ import AppRoutes from "./routes/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-// Reemplaza esto con tu Client ID real de Google
-const clientId = "366213858071-nii0no469m5ebv4pq2jug5e5vnt44imv.apps.googleusercontent.com";
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={clientId}>
