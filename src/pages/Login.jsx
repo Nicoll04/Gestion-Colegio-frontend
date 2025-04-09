@@ -8,8 +8,6 @@ import { GoogleLogin } from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 
 
-
-
 const Login = () => {
     const [correo, setCorreo] = useState("");
     const [contraseña, setContraseña] = useState("");
