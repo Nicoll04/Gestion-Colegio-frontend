@@ -28,7 +28,7 @@ const Login = () => {
         const googleToken = credentialResponse.credential;
     
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/google-token`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/google-token`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
