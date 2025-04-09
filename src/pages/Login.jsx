@@ -5,7 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import "../assets/Login.css";
 
 import { GoogleLogin } from "@react-oauth/google";
-import { jwt_decode } from "jwt-decode";
+import jwt_decode from "jwt-decode";
+
 
 
 const Login = () => {
