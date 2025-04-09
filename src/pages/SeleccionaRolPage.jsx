@@ -15,7 +15,7 @@ const SeleccionarRolPage = () => {
         try {
             const token = localStorage.getItem("token");
 
-            const res = await API.put("/auth/asignar-rol", { rol: rolSeleccionado }, {
+            const res = await API.post("/auth/asignar-rol", { rol: rolSeleccionado }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
