@@ -5,7 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import "../assets/Login.css";
 
 import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
+
 
 
 
@@ -27,7 +28,7 @@ const Login = () => {
 
     const handleGoogleLogin = async (credentialResponse) => {
         const googleToken = credentialResponse.credential;
-        const decoded = jwt_decode(googleToken);
+        const decoded = jwtDecode(googleToken);
         console.log("Google user:", decoded);
 
         try {
