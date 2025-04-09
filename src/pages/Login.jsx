@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "../assets/Login.css";
 
 import { GoogleLogin } from "@react-oauth/google";
-import jwtDecode from "jwt-decode";
+
 
 
 const Login = () => {
@@ -26,9 +26,7 @@ const Login = () => {
 
     const handleGoogleLogin = async (credentialResponse) => {
         const googleToken = credentialResponse.credential;
-        const decoded = jwtDecode(googleToken);
-        console.log("Google user:", decoded);
-
+    
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/google-token`, {
                 method: "POST",
@@ -37,9 +35,9 @@ const Login = () => {
                 },
                 body: JSON.stringify({ googleToken }),
             });
-
+    
             const data = await res.json();
-
+    
             if (data.token) {
                 localStorage.setItem("token", data.token);
                 navigate("/dashboard");
