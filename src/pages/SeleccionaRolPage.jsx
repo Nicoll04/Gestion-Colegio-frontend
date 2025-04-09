@@ -1,4 +1,3 @@
-// src/pages/SeleccionarRolPage.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/axiosConfig";
@@ -15,7 +14,7 @@ const SeleccionarRolPage = () => {
         try {
             const token = localStorage.getItem("token");
 
-            const res = await API.post("/auth/asignar-rol", { rol: rolSeleccionado }, {
+            const res = await API.post("/auth/asignar-rol", { Rol: rolSeleccionado }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -23,11 +22,11 @@ const SeleccionarRolPage = () => {
 
             if (res.data.token) {
                 localStorage.setItem("token", res.data.token);
-                localStorage.setItem("userRole", res.data.rol);
+                localStorage.setItem("userRole", res.data.Rol);
 
                 dispatch(setAuth({
                     token: res.data.token,
-                    rol: res.data.rol,
+                    rol: res.data.Rol,
                     nombre: res.data.nombre || null
                 }));
 
