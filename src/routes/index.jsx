@@ -6,7 +6,6 @@ import EstudiantesPage from "../pages/estudiantesPage";
 import FamiliaresPage from "../pages/familiarPage";
 import ProfesoresPage from "../pages/profesorPage";
 import CursosPage from "../pages/cursosPage";
-import Register from "../pages/Register";
 import StudentDetailPage from "../pages/EstudianteDetailsPage";
 import FamiliarDetailPage from "../pages/FamiliaDetailsPage";
 import ProfesorDetailPage from "../pages/ProfesoresDetailsPage";
@@ -24,7 +23,6 @@ const AppRoutes = () => {
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="/seleccionar-rol" element={<SeleccionarRolPage />} />
 
