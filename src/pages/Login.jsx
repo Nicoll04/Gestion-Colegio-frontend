@@ -90,10 +90,6 @@ const Login = () => {
                             onError={() => console.log("Fallo el login con Google")}
                         />
                     </div>
-
-                    <p className="mt-3 text-center">
-                        ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
-                    </p>
                 </div>
             </div>
         </div>
