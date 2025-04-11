@@ -6,18 +6,7 @@ export const fetchStudents = createAsyncThunk(
   "students/fetchStudents",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/api/estudiantes/con-familiares", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("No autorizado o error en la API");
-      }
-
-      const data = await response.json();
+      const data = await studentsService.getStudentsWithFamiliares();
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

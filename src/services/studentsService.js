@@ -3,6 +3,11 @@ import API from "./axiosConfig";
 const API_URL = "/estudiantes";
 
 const studentsService = {
+    getStudentsWithFamiliares: async () => {
+        const response = await API.get(`${API_URL}/con-familiares`);
+        return response.data;
+    },
+
     // Obtener todos los estudiantes
     getStudents: async () => {
         const response = await API.get(API_URL);
