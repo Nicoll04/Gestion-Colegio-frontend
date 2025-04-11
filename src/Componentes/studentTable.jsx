@@ -130,6 +130,9 @@ const StudentTable = () => {
                 <>
                   <Button $warning onClick={() => handleEdit(student)}>Editar</Button>
                   <Button $danger onClick={() => handleDelete(student.ID_estudiante)}>Eliminar</Button>
+                  <Button onClick={() => navigate(`/familiares?estudianteId=${student.ID_estudiante}`)}>
+                    Agregar Familiar
+                  </Button>
                 </>
               )}
             </Td>

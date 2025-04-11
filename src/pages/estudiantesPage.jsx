@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 
+
 const colors = {
   deepAqua: "#003B46",
   ocean: "#07575B",
@@ -193,7 +194,7 @@ const EstudiantesPage = () => {
 
     try {
       const response = await fetch(
-          `${API_URL}/estudiantes/${editingId ? editingId : ""}`, 
+          `${API_URL}/api/estudiantes/${editingId ? editingId : ""}`,   
           { 
               method: editingId ? "PUT" : "POST",
               headers: {
