@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteStudent, fetchStudents } from "../store/slices/studentSlice";
 import { useNavigate } from "react-router-dom";
@@ -54,13 +54,12 @@ const Button = styled.button`
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  margin: 5px;
+  margin: 4px;
   background: ${(props) => (props.$danger ? "#d9534f" : props.$warning ? "#f0ad4e" : "#5bc0de")};
   &:hover {
     opacity: 0.8;
   }
 `;
-
 
 const BackButton = styled.button`
   margin-top: 20px;
@@ -75,12 +74,36 @@ const BackButton = styled.button`
   }
 `;
 
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const PageButton = styled.button`
+  padding: 8px 12px;
+  background: ${(props) => (props.active ? colors.deepAqua : colors.wave)};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: ${(props) => (props.active ? "bold" : "normal")};
+  &:hover {
+    background: ${colors.ocean};
+  }
+`;
+
 const StudentTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { students } = useSelector((state) => state.students);
   const { cursos } = useSelector((state) => state.cursos);
   const userRole = useSelector((state) => state.auth.rol);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const studentsPerPage = 10;
 
   useEffect(() => {
     dispatch(fetchStudents());
@@ -102,6 +125,18 @@ const StudentTable = () => {
     navigate(`/estudiante/${student.ID_estudiante}`);
   };
 
+  // --- Paginación ---
+  const totalPages = Math.ceil(students.length / studentsPerPage);
+  const indexOfLast = currentPage * studentsPerPage;
+  const indexOfFirst = indexOfLast - studentsPerPage;
+  const currentStudents = students.slice(indexOfFirst, indexOfLast);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <Container>
       <h2 style={{ textAlign: "center", color: colors.deepAqua }}>Listado de Estudiantes</h2>
@@ -117,29 +152,48 @@ const StudentTable = () => {
           </tr>
         </Thead>
         <tbody>
-        {Array.isArray(students) && students.map((student) => (
+          {Array.isArray(currentStudents) && currentStudents.map((student) => (
             <tr key={student.ID_estudiante}>
               <Td>{cursos.find((c) => c.ID_Curso === student.ID_Curso)?.Nombre_curso || "Sin curso"}</Td>
               <Td>{student.Nombre_completo}</Td>
               <Td>{student.Tipo_documento}</Td>
               <Td>{student.Nro_Documento}</Td>
               <Td>{student.Estado}</Td>
-            <Td>
-              <Button $primary onClick={() => handleRead(student)}>Detalles</Button>
-              {userRole === "admin" && (
-                <>
-                  <Button $warning onClick={() => handleEdit(student)}>Editar</Button>
-                  <Button $danger onClick={() => handleDelete(student.ID_estudiante)}>Eliminar</Button>
-                  <Button onClick={() => navigate(`/familiares?estudianteId=${student.ID_estudiante}`)}>
-                    Agregar Familiar
-                  </Button>
-                </>
-              )}
-            </Td>
+              <Td>
+                <Button $primary onClick={() => handleRead(student)}>Detalles</Button>
+                {userRole === "admin" && (
+                  <>
+                    <Button $warning onClick={() => handleEdit(student)}>Editar</Button>
+                    <Button $danger onClick={() => handleDelete(student.ID_estudiante)}>Eliminar</Button>
+                    <Button onClick={() => navigate(`/familiares?estudianteId=${student.ID_estudiante}`)}>
+                      Agregar Familiar
+                    </Button>
+                  </>
+                )}
+              </Td>
             </tr>
           ))}
         </tbody>
       </Table>
+
+      <Pagination>
+        <PageButton onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+          ⬅ Anterior
+        </PageButton>
+        {[...Array(totalPages)].map((_, i) => (
+          <PageButton
+            key={i}
+            active={currentPage === i + 1}
+            onClick={() => handlePageChange(i + 1)}
+          >
+            {i + 1}
+          </PageButton>
+        ))}
+        <PageButton onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+          Siguiente ➡
+        </PageButton>
+      </Pagination>
+
       <BackButton onClick={() => navigate("/estudiantes")}>🔙 Volver</BackButton>
     </Container>
   );
