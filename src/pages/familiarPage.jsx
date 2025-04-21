@@ -143,16 +143,32 @@ const FamiliaresPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Verificar que un estudiante ha sido seleccionado
     if (!formData.ID_Estudiante) {
       alert("Debes seleccionar un estudiante antes de continuar.");
       return;
     }
+  
+    // Eliminar los campos vacíos de formData antes de enviarlo
+    let dataToSend = { ...formData };
+    Object.keys(dataToSend).forEach((key) => {
+      if (!dataToSend[key]) {
+        delete dataToSend[key]; 
+      }
+    });
+  
+    // Enviar los datos según si es una actualización o un nuevo familiar
     if (editingId) {
-      await dispatch(updateFamiliar({ id: editingId, familiarData: formData }));
+      await dispatch(updateFamiliar({ id: editingId, familiarData: dataToSend }));
     } else {
-      await dispatch(addFamiliar(formData));
+      await dispatch(addFamiliar(dataToSend));
     }
+  
+    // Refrescar los familiares
     dispatch(fetchFamiliares());
+  
+    // Limpiar el formulario
     setFormData({
       ID_Estudiante: "",
       Representante: "",
@@ -165,6 +181,7 @@ const FamiliaresPage = () => {
     });
     setEditingId(null);
   };
+  
 
   return (
     <Container>

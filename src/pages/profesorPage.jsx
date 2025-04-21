@@ -130,18 +130,11 @@ const ProfesoresPage = () => {
     if (id && profesores.length > 0) {
       const profesorExistente = profesores.find((p) => String(p.ID_Profesores) === id);
       if (profesorExistente) {
-        const { Foto, Fecha_nacimiento, ...otrosDatos } = profesorExistente;
-        const fechaFormateada = Fecha_nacimiento
-          ? new Date(Fecha_nacimiento).toISOString().split("T")[0]
-          : "";
-        setFormData({
-          ...otrosDatos,
-          Fecha_nacimiento: fechaFormateada,
-        });
+        const { Foto, ...datosSinFoto } = profesorExistente; 
+        setFormData(datosSinFoto);
       }
     }
   }, [id, profesores]);
-  
   
 
   const handleChange = (e) => {
