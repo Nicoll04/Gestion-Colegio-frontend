@@ -105,11 +105,21 @@ const ProfesorDetalles = () => {
   
       <DetailsGrid>
         {Object.entries(profesor).map(([key, value]) => {
-          if (key === "Foto") return null; // Evita mostrar la URL en texto
+          if (key === "Foto") return null; 
           
+          let displayValue = value;
+
+          // Si es fecha válida, la mostramos como YYYY-MM-DD
+          if (key.toLowerCase().includes("fecha") && value) {
+            const date = new Date(value);
+            if (!isNaN(date.getTime())) {
+              displayValue = date.toISOString().split("T")[0];
+            }
+          }
+
           return (
             <ListItem key={key}>
-              <strong>{key.replace("_", " ")}:</strong> {value}
+              <strong>{key.replace("_", " ")}:</strong> {displayValue}
             </ListItem>
           );
         })}
