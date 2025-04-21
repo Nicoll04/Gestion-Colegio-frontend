@@ -192,13 +192,33 @@ const FamiliaresPage = () => {
           .map((key) => (
             <InputGroup key={key}>
               <Label>{key.replace(/_/g, " ")}:</Label>
-              <Input
-                type="text"
-                name={key}
-                value={formData[key]}
-                onChange={handleChange}
-                required
-              />
+              {key === "Representante" ? (
+                <Select
+                  options={[
+                    { value: "Primero", label: "Primero" },
+                    { value: "Segundo", label: "Segundo" },
+                    { value: "Emergencia", label: "Emergencia" },
+                  ]}
+                  value={
+                    formData.Representante
+                      ? { value: formData.Representante, label: formData.Representante }
+                      : null
+                  }
+                  onChange={(selectedOption) =>
+                    setFormData((prev) => ({ ...prev, Representante: selectedOption.value }))
+                  }
+                  placeholder="Selecciona tipo de representante"
+                  isClearable
+                />
+              ) : (
+                <Input
+                  type="text"
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleChange}
+                  required
+                />
+              )}
             </InputGroup>
           ))}
         <FullWidth>
