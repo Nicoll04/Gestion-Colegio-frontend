@@ -125,14 +125,11 @@ const StudentTable = () => {
     navigate(`/estudiante/${student.ID_estudiante}`);
   };
 
-    // Ordena los estudiantes por fecha de creación antes de la paginación
-  const sortedStudents = [...students].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // Ordena por el campo 'createdAt'
-
-    // --- Paginación ---
-  const totalPages = Math.ceil(sortedStudents.length / studentsPerPage);
+  // --- Paginación ---
+  const totalPages = Math.ceil(students.length / studentsPerPage);
   const indexOfLast = currentPage * studentsPerPage;
   const indexOfFirst = indexOfLast - studentsPerPage;
-  const currentStudents = sortedStudents.slice(indexOfFirst, indexOfLast);
+  const currentStudents = students.slice(indexOfFirst, indexOfLast);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
