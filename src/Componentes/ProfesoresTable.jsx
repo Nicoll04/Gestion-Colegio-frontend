@@ -155,8 +155,7 @@ const ProfesoresLista = () => {
                   <Td>{profesor.Nro_Documento}</Td>
                   <Td>{profesor.Celular}</Td>
                   <Td title={profesor.Correo_institucional}>{profesor.Correo_institucional}</Td>
-                  <Td style={{ whiteSpace: "nowrap" }}>
-                    <div style={{ display: "flex", justifyContent: "center", gap: "8px", width: "100%" }}>
+                  <Td>
                       <Button onClick={() => navigate(`/profesores/detalles/${profesor.ID_Profesores}`)}>
                         Detalles
                       </Button>
@@ -170,8 +169,8 @@ const ProfesoresLista = () => {
                           </Button>
                         </>
                       )}
-                    </div>
                   </Td>
+              
                 </tr>
               ))}
             </tbody>
