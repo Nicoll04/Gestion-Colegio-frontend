@@ -241,8 +241,8 @@ const FamiliaresPage = () => {
         <Button $primary type="submit" disabled={userRole !== "admin"}>
           {editingId ? "Actualizar Familiar" : "Agregar Familiar"}
         </Button>
-          <Button onClick={() => navigate("/tabla-familiares")}>Registrados</Button>
         </FullWidth>
+        <Button onClick={() => navigate("/tabla-familiares")}>Registrados</Button>
       </Form>
     </Container>
   );
