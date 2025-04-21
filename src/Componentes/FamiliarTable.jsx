@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFamiliares, deleteFamiliar } from "../store/slices/familiarSlice";
 import { useNavigate } from "react-router-dom";
@@ -74,12 +74,35 @@ const BackButton = styled.button`
   }
 `;
 
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const PageButton = styled.button`
+  padding: 8px 12px;
+  background: ${(props) => (props.active ? colors.deepAqua : colors.wave)};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: ${(props) => (props.active ? "bold" : "normal")};
+  &:hover {
+    background: ${colors.ocean};
+  }
+`;
+
 const FamiliarTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { familiares } = useSelector((state) => state.familiares);
   const userRole = useSelector((state) => state.auth.rol);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const familiaresPerPage = 10;
 
   useEffect(() => {
     dispatch(fetchFamiliares());
@@ -99,6 +122,18 @@ const FamiliarTable = () => {
     navigate(`/familiares/${id}`);
   };
 
+  // Paginación
+  const totalPages = Math.ceil(familiares.length / familiaresPerPage);
+  const indexOfLast = currentPage * familiaresPerPage;
+  const indexOfFirst = indexOfLast - familiaresPerPage;
+  const currentFamiliares = familiares.slice(indexOfFirst, indexOfLast);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <Container>
       <h2 style={{ textAlign: "center", color: colors.deepAqua }}>Listado de Familiares</h2>
@@ -114,7 +149,7 @@ const FamiliarTable = () => {
           </tr>
         </Thead>
         <tbody>
-          {Array.isArray(familiares) && familiares.map((familiar) => (
+          {Array.isArray(currentFamiliares) && currentFamiliares.map((familiar) => (
             <tr key={familiar.ID_Familiar}>
               <Td>{familiar.ID_Estudiante}</Td>
               <Td>{familiar.Representante}</Td>
@@ -125,8 +160,8 @@ const FamiliarTable = () => {
                 <Button onClick={() => handleDetails(familiar.ID_Familiar)}>Detalles</Button>
                 {userRole === "admin" && (
                   <>
-                     <Button $warning onClick={() => handleEdit(familiar.ID_Familiar)}>Editar</Button>
-                     <Button $danger onClick={() => handleDelete(familiar.ID_Familiar)}>Eliminar</Button>
+                    <Button $warning onClick={() => handleEdit(familiar.ID_Familiar)}>Editar</Button>
+                    <Button $danger onClick={() => handleDelete(familiar.ID_Familiar)}>Eliminar</Button>
                   </>
                 )}
               </Td>
@@ -134,6 +169,25 @@ const FamiliarTable = () => {
           ))}
         </tbody>
       </Table>
+
+      <Pagination>
+        <PageButton onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+          ⬅ Anterior
+        </PageButton>
+        {[...Array(totalPages)].map((_, i) => (
+          <PageButton
+            key={i}
+            active={currentPage === i + 1}
+            onClick={() => handlePageChange(i + 1)}
+          >
+            {i + 1}
+          </PageButton>
+        ))}
+        <PageButton onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+          Siguiente ➡
+        </PageButton>
+      </Pagination>
+
       <BackButton onClick={() => navigate("/familiares")}>🔙 Volver</BackButton>
     </Container>
   );
