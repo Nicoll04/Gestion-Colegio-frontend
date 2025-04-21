@@ -144,14 +144,23 @@ const EstudiantesPage = () => {
     dispatch(fetchCursos());
   }, [dispatch]);
 
+  const formatearFecha = (fechaISO) => {
+    if (!fechaISO) return "";
+    return new Date(fechaISO).toISOString().split("T")[0];
+  };
+  
   useEffect(() => {
     if (editingId) {
       const studentToEdit = students.find(s => s.ID_estudiante.toString() === editingId);
       if (studentToEdit) {
-        setFormData({ ...studentToEdit });
+        setFormData({
+          ...studentToEdit,
+          Fecha_nacimiento: formatearFecha(studentToEdit.Fecha_nacimiento),
+        });
       }
     }
   }, [editingId, students]);
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
