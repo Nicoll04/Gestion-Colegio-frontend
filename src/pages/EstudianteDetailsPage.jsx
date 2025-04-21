@@ -123,10 +123,12 @@ const StudentDetailPage = () => {
                       <li key={index}>
                         {familiar.ID_Familiar ? (
                           <Link to={`/familiares/${familiar.ID_Familiar}`}>
-                             {familiar.nombre_completo} (Representante)
-                          </Link>
+                          {familiar.nombre_completo} ({familiar.representante})
+                        </Link>
                         ) : (
-                          <span>{familiar.nombre_completo} (Representante)</span>
+                          <span>
+                            {familiar.nombre_completo} ({familiar.representante})
+                          </span>
                         )}
                       </li>
                     ))
