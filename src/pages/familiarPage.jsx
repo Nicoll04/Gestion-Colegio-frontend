@@ -233,7 +233,6 @@ const FamiliaresPage = () => {
                   name={key}
                   value={formData[key]}
                   onChange={handleChange}
-                  required
                 />
               )}
             </InputGroup>
