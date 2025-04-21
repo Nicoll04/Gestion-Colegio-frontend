@@ -129,7 +129,9 @@ const StudentTable = () => {
   const totalPages = Math.ceil(students.length / studentsPerPage);
   const indexOfLast = currentPage * studentsPerPage;
   const indexOfFirst = indexOfLast - studentsPerPage;
-  const currentStudents = students.slice(indexOfFirst, indexOfLast);
+  const orderedStudents = [...students].sort((a, b) => a.ID_Curso - b.ID_Curso);
+  const currentStudents = orderedStudents.slice(indexOfFirst, indexOfLast);
+
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
