@@ -33,7 +33,7 @@ const Login = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ googleToken }),
+                body: JSON.stringify({ credential: googleToken }),
             });
     
             const data = await res.json();
