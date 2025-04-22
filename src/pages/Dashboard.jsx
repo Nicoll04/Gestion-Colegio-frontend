@@ -2,9 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-// Estilos con styled-components
-
-
 const Container = styled.div`
     max-width: 900px;
     margin: auto;
@@ -84,8 +81,19 @@ const LogoutButton = styled.button`
     }
 `;
 
+const WelcomeText = styled.h2`
+    color: #555;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+`;
+
+
 const Dashboard = () => {
     const navigate = useNavigate();
+    const nombre = localStorage.getItem("userName");
+
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -102,6 +110,7 @@ const Dashboard = () => {
     return (
         <Container>
             <Title>Bienvenido al Sistema de Gestión Escolar ISMC</Title>
+            <WelcomeText>Hola, {nombre} 👋</WelcomeText>
             <IconContainer>
                 <LargeIcon src="/icons/sol ismc.jpg" alt="Logo" />
             </IconContainer>

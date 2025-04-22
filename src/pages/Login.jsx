@@ -40,6 +40,7 @@ const Login = () => {
     
             if (data.token) {
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("userName", data.nombre); 
             
                 if (!data.rol) {
                     navigate("/seleccionar-rol");
@@ -47,7 +48,7 @@ const Login = () => {
                     localStorage.setItem("userRole", data.rol);
                     navigate("/dashboard");
                 }
-            }
+            }            
             
         } catch (error) {
             console.error("Error Google login:", error);
