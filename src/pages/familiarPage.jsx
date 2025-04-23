@@ -100,6 +100,18 @@ const Button = styled.button`
   }
 `;
 
+const ErrorMessage = styled.div`
+  grid-column: span 2;
+  color: red;
+  background-color: #ffe5e5;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+
 
 const FamiliaresPage = () => {
   const dispatch = useDispatch();
