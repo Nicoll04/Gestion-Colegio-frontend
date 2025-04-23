@@ -117,6 +117,7 @@ const FamiliaresPage = () => {
     Email: "",
   });
   const [editingId, setEditingId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
   const editId = location.state?.editId || null;
   const userRole = useSelector((state) => state.auth.rol);
@@ -144,42 +145,46 @@ const FamiliaresPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Verificar que un estudiante ha sido seleccionado
+    // Validación inicial
     if (!formData.ID_Estudiante) {
-      alert("Debes seleccionar un estudiante antes de continuar.");
+      setErrorMessage("Debes seleccionar un estudiante antes de continuar.");
       return;
+    } else {
+      setErrorMessage(""); // Limpia errores anteriores
     }
   
-    // Eliminar los campos vacíos de formData antes de enviarlo
     let dataToSend = { ...formData };
     Object.keys(dataToSend).forEach((key) => {
       if (!dataToSend[key]) {
-        delete dataToSend[key]; 
+        delete dataToSend[key];
       }
     });
   
-    // Enviar los datos según si es una actualización o un nuevo familiar
-    if (editingId) {
-      await dispatch(updateFamiliar({ id: editingId, familiarData: dataToSend }));
-    } else {
-      await dispatch(addFamiliar(dataToSend));
+    try {
+      if (editingId) {
+        await dispatch(updateFamiliar({ id: editingId, familiarData: dataToSend })).unwrap();
+      } else {
+        await dispatch(addFamiliar(dataToSend)).unwrap();
+      }
+  
+      dispatch(fetchFamiliares());
+      setFormData({
+        ID_Estudiante: "",
+        Representante: "",
+        Parentesco: "",
+        Nombre_completo: "",
+        Nro_Documento: "",
+        Direccion_Residencia: "",
+        Celular: "",
+        Email: "",
+      });
+      setEditingId(null);
+      setErrorMessage(""); // Limpiar errores al guardar exitosamente
+  
+    } catch (error) {
+      setErrorMessage("Hubo un error al guardar el familiar. Intenta nuevamente.");
+      console.error("Error al guardar familiar:", error);
     }
-  
-    // Refrescar los familiares
-    dispatch(fetchFamiliares());
-  
-    // Limpiar el formulario
-    setFormData({
-      ID_Estudiante: "",
-      Representante: "",
-      Parentesco: "",
-      Nombre_completo: "",
-      Nro_Documento: "",
-      Direccion_Residencia: "",
-      Celular: "",
-      Email: "",
-    });
-    setEditingId(null);
   };
   
 
@@ -190,6 +195,7 @@ const FamiliaresPage = () => {
       </HomeButton>
       <Title>Gestión de Familiares</Title>
       <Form onSubmit={handleSubmit}>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <FullWidth>
           <Label>Buscar Estudiante:</Label>
           <Select
