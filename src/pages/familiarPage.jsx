@@ -216,7 +216,10 @@ const FamiliaresPage = () => {
               label: est.Nombre_completo,
             }))}
             onChange={(selectedOption) =>
-              setFormData((prevData) => ({ ...prevData, ID_Estudiante: selectedOption.value }))
+              setFormData((prevData) => ({
+                ...prevData,
+                ID_Estudiante: selectedOption ? selectedOption.value : "",
+              }))
             }
             placeholder="Escribe para buscar..."
             isClearable
