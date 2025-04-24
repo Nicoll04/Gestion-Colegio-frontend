@@ -4,7 +4,7 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fetchStudents } from "../store/slices/studentSlice";
-import { fetchFamiliares, updateFamiliar, vincularFamiliar } from "../store/slices/familiarSlice";
+import { fetchFamiliares, addFamiliar, updateFamiliar } from "../store/slices/familiarSlice";
 import { useLocation } from "react-router-dom";
 
 const colors = {
@@ -176,7 +176,7 @@ const FamiliaresPage = () => {
       if (editingId) {
         await dispatch(updateFamiliar({ id: editingId, familiarData: dataToSend })).unwrap();
       } else {
-        await dispatch(vincularFamiliar(dataToSend)).unwrap();
+        await dispatch(addFamiliar(dataToSend)).unwrap();
       }
   
       dispatch(fetchFamiliares());

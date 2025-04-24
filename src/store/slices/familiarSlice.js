@@ -47,19 +47,6 @@ export const deleteFamiliar = createAsyncThunk(
   }
 );
 
-export const vincularFamiliar = createAsyncThunk(
-  "familiares/vincularFamiliar",
-  async (familiarData, { rejectWithValue }) => {
-    try {
-      const response = await familiaresService.addFamiliar(familiarData);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
-    }
-  }
-);
-
-
 const familiaresSlice = createSlice({
   name: "familiares",
   initialState: {
@@ -106,19 +93,6 @@ const familiaresSlice = createSlice({
       })
       .addCase(deleteFamiliar.rejected, (state, action) => {
         state.error = action.payload || "Error al eliminar familiar";
-      })
-      .addCase(vincularFamiliar.fulfilled, (state, action) => {
-        const familiarExistente = state.familiares.find(
-          (f) => f.ID_Familiar === action.payload.ID_Familiar
-        );
-
-        // Si ya existía no lo agregues de nuevo
-        if (!familiarExistente) {
-          state.familiares.push(action.payload);
-        }
-      })
-      .addCase(vincularFamiliar.rejected, (state, action) => {
-        state.error = action.payload || "Error al vincular familiar";
       });
   },
 });
