@@ -4,7 +4,7 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fetchStudents } from "../store/slices/studentSlice";
-import { fetchFamiliares, addFamiliar, updateFamiliar, asociarFamiliarEstudiante, buscarFamiliarPorDocumentoOCelular, } from "../store/slices/familiarSlice";
+import { fetchFamiliares, addFamiliar, updateFamiliar } from "../store/slices/familiarSlice";
 import { useLocation } from "react-router-dom";
 
 const colors = {
@@ -157,14 +157,14 @@ const FamiliaresPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
+    // Validación inicial
     if (!formData.ID_Estudiante) {
       setErrorMessage("Debes seleccionar un estudiante antes de continuar.");
       return;
     } else {
-      setErrorMessage("");
+      setErrorMessage(""); // Limpia errores anteriores
     }
   
-    const { Nro_Documento, Celular, ID_Estudiante } = formData;
     let dataToSend = { ...formData };
     Object.keys(dataToSend).forEach((key) => {
       if (!dataToSend[key]) {
@@ -176,37 +176,10 @@ const FamiliaresPage = () => {
       if (editingId) {
         await dispatch(updateFamiliar({ id: editingId, familiarData: dataToSend })).unwrap();
       } else {
-        // 1. Verificamos si ya existe
-        const existing = await dispatch(
-          buscarFamiliarPorDocumentoOCelular({ Nro_Documento, Celular })
-        ).unwrap();
-  
-        if (existing && existing.ID_Familiar) {
-          // 2. Asociamos si ya existe
-          await dispatch(
-            asociarFamiliarEstudiante({
-              ID_Familiar: existing.ID_Familiar,
-              ID_Estudiante,
-            })
-          ).unwrap();
-        } else {
-          // 3. Si no existe, lo creamos
-          const nuevoFamiliar = await dispatch(addFamiliar(dataToSend)).unwrap();
-  
-          // 4. Luego lo asociamos con el estudiante
-          await dispatch(
-            asociarFamiliarEstudiante({
-              ID_Familiar: nuevoFamiliar.ID_Familiar,
-              ID_Estudiante,
-            })
-          ).unwrap();
-        }
+        await dispatch(addFamiliar(dataToSend)).unwrap();
       }
   
-      // Refrescar la lista
       dispatch(fetchFamiliares());
-  
-      // Limpiar el formulario
       setFormData({
         ID_Estudiante: "",
         Representante: "",
@@ -218,13 +191,13 @@ const FamiliaresPage = () => {
         Email: "",
       });
       setEditingId(null);
-      setErrorMessage("");
+      setErrorMessage(""); // Limpiar errores al guardar exitosamente
+  
     } catch (error) {
-      setErrorMessage("Hubo un error al guardar o asociar el familiar. Intenta nuevamente.");
-      console.error("Error al guardar/asociar familiar:", error);
+      setErrorMessage("Hubo un error al guardar el familiar. Intenta nuevamente.");
+      console.error("Error al guardar familiar:", error);
     }
   };
-  
   
 
   return (

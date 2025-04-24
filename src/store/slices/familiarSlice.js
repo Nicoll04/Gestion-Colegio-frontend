@@ -47,29 +47,6 @@ export const deleteFamiliar = createAsyncThunk(
   }
 );
 
-export const asociarFamiliarEstudiante = createAsyncThunk(
-  "familiares/asociarFamiliarEstudiante",
-  async ({ ID_Familiar, ID_Estudiante }, { rejectWithValue }) => {
-    try {
-      return await familiaresService.asociarFamiliarEstudiante(ID_Familiar, ID_Estudiante);
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const buscarFamiliarPorDocumentoOCelular = createAsyncThunk(
-  "familiares/buscarFamiliarPorDocumentoOCelular",
-  async ({ Nro_Documento, Celular }, { rejectWithValue }) => {
-    try {
-      return await familiaresService.buscarFamiliarPorDocumentoOCelular(Nro_Documento, Celular);
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-
 const familiaresSlice = createSlice({
   name: "familiares",
   initialState: {
@@ -116,12 +93,6 @@ const familiaresSlice = createSlice({
       })
       .addCase(deleteFamiliar.rejected, (state, action) => {
         state.error = action.payload || "Error al eliminar familiar";
-      })
-      .addCase(asociarFamiliarEstudiante.rejected, (state, action) => {
-        state.error = action.payload || "Error al asociar familiar con estudiante";
-      })
-      .addCase(buscarFamiliarPorDocumentoOCelular.rejected, (state, action) => {
-        state.error = action.payload || "Error al buscar familiar existente";
       });
   },
 });
