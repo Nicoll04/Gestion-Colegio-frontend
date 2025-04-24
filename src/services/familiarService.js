@@ -35,10 +35,38 @@ const deleteFamiliar = async (id) => {
     await API.delete(`${API_URL}/${id}`);
 };
 
+const buscarFamiliarPorDocumentoOCelular = async ({ Nro_Documento, Celular }) => {
+    try {
+        const response = await API.get(`/familiares/verificar`, {
+            params: { Nro_Documento, Celular },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al buscar familiar:", error);
+        throw error;
+    }
+};
+
+const asociarFamiliarEstudiante = async ({ ID_Familiar, ID_Estudiante }) => {
+    try {
+        const response = await API.post(`/familiares/asociar`, {
+            ID_Familiar,
+            ID_Estudiante,
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al asociar familiar con estudiante:", error);
+        throw error;
+    }
+};
+
+
 export default {
     getFamiliares,
     getFamiliarById,
     addFamiliar,
     updateFamiliar,
     deleteFamiliar,
+    buscarFamiliarPorDocumentoOCelular,
+    asociarFamiliarEstudiante,
 };
