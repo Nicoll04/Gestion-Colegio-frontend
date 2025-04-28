@@ -137,10 +137,10 @@ const FamiliarTable = () => {
   const filteredFamiliares = familiares.filter((familiar) => {
     const lowercasedTerm = searchTerm.toLowerCase();
     return (
-      familiar.Representante.toLowerCase().includes(lowercasedTerm) ||
-      familiar.Parentesco.toLowerCase().includes(lowercasedTerm) ||
-      familiar.Nombre_completo.toLowerCase().includes(lowercasedTerm) ||
-      familiar.Celular.toLowerCase().includes(lowercasedTerm)
+      (familiar.Representante && familiar.Representante.toLowerCase().includes(lowercasedTerm)) ||
+      (familiar.Parentesco && familiar.Parentesco.toLowerCase().includes(lowercasedTerm)) ||
+      (familiar.Nombre_completo && familiar.Nombre_completo.toLowerCase().includes(lowercasedTerm)) ||
+      (familiar.Celular && familiar.Celular.toLowerCase().includes(lowercasedTerm))
     );
   });
 
