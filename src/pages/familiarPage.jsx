@@ -165,18 +165,6 @@ const FamiliaresPage = () => {
       setErrorMessage(""); // Limpia errores anteriores
     }
   
-    // Verificar si ya existe un familiar con el mismo número de documento o celular
-    const familiarExistente = familiares.find(
-      (familiar) =>
-        familiar.Nro_Documento === formData.Nro_Documento ||
-        familiar.Celular === formData.Celular
-    );
-  
-    if (familiarExistente) {
-      setErrorMessage("Ya existe un familiar con este número de documento o celular.");
-      return;
-    }
-  
     let dataToSend = { ...formData };
     Object.keys(dataToSend).forEach((key) => {
       if (!dataToSend[key]) {
