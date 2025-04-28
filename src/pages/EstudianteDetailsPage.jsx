@@ -90,10 +90,12 @@ const StudentDetailPage = () => {
 
   useEffect(() => {
     if (students.length > 0) {
-      const foundStudent = students.find((s) => Number(s.ID_estudiante) === Number(id));
-      setStudent(foundStudent);
+        const foundStudent = students.find((s) => Number(s.ID_estudiante) === Number(id));
+        console.log(foundStudent); 
+        setStudent(foundStudent);
     }
-  }, [students, id]);
+}, [students, id]);
+
 
   if (loading) {
     return <p>Cargando información del estudiante...</p>;
