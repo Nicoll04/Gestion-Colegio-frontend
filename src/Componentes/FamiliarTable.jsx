@@ -66,7 +66,7 @@ const BackButton = styled.button`
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background: ${colors.coral}; 
+  background: ${colors.coral};
   color: white;
   cursor: pointer;
   &:hover {
@@ -95,6 +95,16 @@ const PageButton = styled.button`
   }
 `;
 
+const SearchInput = styled.input`
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid ${colors.wave};
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  font-size: 16px;
+`;
+
 const FamiliarTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -102,6 +112,7 @@ const FamiliarTable = () => {
   const userRole = useSelector((state) => state.auth.rol);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const familiaresPerPage = 10;
 
   useEffect(() => {
@@ -122,11 +133,22 @@ const FamiliarTable = () => {
     navigate(`/familiares/${id}`);
   };
 
+  // Filtrar familiares
+  const filteredFamiliares = familiares.filter((familiar) => {
+    const lowercasedTerm = searchTerm.toLowerCase();
+    return (
+      familiar.Representante.toLowerCase().includes(lowercasedTerm) ||
+      familiar.Parentesco.toLowerCase().includes(lowercasedTerm) ||
+      familiar.Nombre_completo.toLowerCase().includes(lowercasedTerm) ||
+      familiar.Celular.toLowerCase().includes(lowercasedTerm)
+    );
+  });
+
   // Paginación
-  const totalPages = Math.ceil(familiares.length / familiaresPerPage);
+  const totalPages = Math.ceil(filteredFamiliares.length / familiaresPerPage);
   const indexOfLast = currentPage * familiaresPerPage;
   const indexOfFirst = indexOfLast - familiaresPerPage;
-  const currentFamiliares = familiares.slice(indexOfFirst, indexOfLast);
+  const currentFamiliares = filteredFamiliares.slice(indexOfFirst, indexOfLast);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -137,6 +159,12 @@ const FamiliarTable = () => {
   return (
     <Container>
       <h2 style={{ textAlign: "center", color: colors.deepAqua }}>Listado de Familiares</h2>
+      <SearchInput
+        type="text"
+        placeholder="Buscar por Representante, Parentesco, Nombre o Celular"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <Table>
         <Thead>
           <tr>
