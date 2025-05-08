@@ -44,7 +44,7 @@ const ListItem = styled.li`
   }
   a {
     text-decoration: none;
-    color: ${colors.coral};
+    color: black;
     font-weight: bold;
     &:hover {
       text-decoration: underline;
@@ -97,6 +97,17 @@ const EstudiantesCursoPage = () => {
   if (loading) return <p className="text-center mt-4">Cargando...</p>;
   if (error) return <p className="text-center mt-4 text-danger">{error}</p>;
 
+  const formatearNombre = (nombreCompleto) => {
+    const partes = nombreCompleto.trim().split(" ");
+    if (partes.length < 2) return nombreCompleto;
+    
+    // Asume que los últimos dos son apellidos, el resto son nombres
+    const apellidos = partes.slice(-2).join(" ");
+    const nombres = partes.slice(0, -2).join(" ");
+    return `${apellidos} ${nombres}`;
+  };
+  
+
   return (
     <Container>
       <Title>Estudiantes del Curso: {curso ? curso.Nombre_curso : "Desconocido"}</Title>
@@ -109,7 +120,9 @@ const EstudiantesCursoPage = () => {
           .sort((a, b) => a.Nombre_completo.localeCompare(b.Nombre_completo))
           .map((est) => (
             <ListItem key={est.ID_estudiante}>
-              <Link to={`/estudiante/${est.ID_estudiante}`}>{est.Nombre_completo}</Link>
+            <Link to={`/estudiante/${est.ID_estudiante}`}>
+              {formatearNombre(est.Nombre_completo)}
+            </Link>
             </ListItem>
         ))}
         </List>

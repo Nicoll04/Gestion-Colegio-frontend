@@ -154,8 +154,17 @@ const EstudiantesPage = () => {
       const studentToEdit = students.find(s => s.ID_estudiante.toString() === editingId);
       if (studentToEdit) {
         setFormData({
-          ...studentToEdit,
+          ID_Curso: studentToEdit.ID_Curso || "",
+          Nombre_completo: studentToEdit.Nombre_completo || "",
           Fecha_nacimiento: formatearFecha(studentToEdit.Fecha_nacimiento),
+          Tipo_documento: studentToEdit.Tipo_documento || "",
+          Nro_Documento: studentToEdit.Nro_Documento || "",
+          RH: studentToEdit.RH || "",
+          EPS: studentToEdit.EPS || "",
+          Correo_institucional: studentToEdit.Correo_institucional || "",
+          Estado: studentToEdit.Estado || "", 
+          Direccion_Residencia: studentToEdit.Direccion_Residencia || "",
+          Foto: studentToEdit.Foto || "",
         });
       }
     }

@@ -126,15 +126,24 @@ const ProfesoresPage = () => {
     dispatch(fetchProfesores());
   }, [dispatch]);
 
+  const formatearFecha = (fechaISO) => {
+    if (!fechaISO) return "";
+    return new Date(fechaISO).toISOString().split("T")[0];
+  };
+  
   useEffect(() => {
     if (id && profesores.length > 0) {
       const profesorExistente = profesores.find((p) => String(p.ID_Profesores) === id);
       if (profesorExistente) {
-        const { Foto, ...datosSinFoto } = profesorExistente; 
-        setFormData(datosSinFoto);
+        const { Foto, ...datosSinFoto } = profesorExistente;
+        setFormData({
+          ...datosSinFoto,
+          Fecha_nacimiento: formatearFecha(datosSinFoto.Fecha_nacimiento),
+        });
       }
     }
   }, [id, profesores]);
+  
   
 
   const handleChange = (e) => {
