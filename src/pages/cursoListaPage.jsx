@@ -82,7 +82,11 @@ const EstudiantesCursoPage = () => {
         setCurso(cursoData);
 
         const estudiantesData = await fetchEstudiantesByCurso(id);
-        setEstudiantes(estudiantesData);
+        const estudiantesFormateados = estudiantesData.map(est => ({
+          ...est,
+          Nombre_formateado: formatearNombre(est.Nombre_completo)
+        }));
+        setEstudiantes(estudiantesFormateados);
       } catch (err) {
         setError("Error al cargar los datos.");
         console.error(err);
@@ -101,7 +105,7 @@ const EstudiantesCursoPage = () => {
     const partes = nombreCompleto.trim().split(" ");
     if (partes.length < 2) return nombreCompleto;
     
-    // Asume que los últimos dos son apellidos, el resto son nombres
+    
     const apellidos = partes.slice(-2).join(" ");
     const nombres = partes.slice(0, -2).join(" ");
     return `${apellidos} ${nombres}`;
@@ -117,11 +121,11 @@ const EstudiantesCursoPage = () => {
       ) : (
         <List>
           {[...estudiantes]
-          .sort((a, b) => a.Nombre_completo.localeCompare(b.Nombre_completo))
+          .sort((a, b) => a.Nombre_formateado.localeCompare(b.Nombre_formateado))
           .map((est) => (
             <ListItem key={est.ID_estudiante}>
             <Link to={`/estudiante/${est.ID_estudiante}`}>
-              {formatearNombre(est.Nombre_completo)}
+            {est.Nombre_formateado}
             </Link>
             </ListItem>
         ))}
