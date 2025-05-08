@@ -75,6 +75,17 @@ const EstudiantesCursoPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Esta función formatea el nombre, poniendo los apellidos primero
+  const formatearNombre = (nombreCompleto) => {
+    const partes = nombreCompleto.trim().split(" ");
+    if (partes.length < 2) return nombreCompleto;
+    
+    // Asumimos que los últimos dos son apellidos y el resto son nombres
+    const apellidos = partes.slice(-2).join(" ");
+    const nombres = partes.slice(0, -2).join(" ");
+    return `${apellidos} ${nombres}`;
+  };
+
   useEffect(() => {
     const cargarDatos = async () => {
       try {
@@ -101,17 +112,6 @@ const EstudiantesCursoPage = () => {
   if (loading) return <p className="text-center mt-4">Cargando...</p>;
   if (error) return <p className="text-center mt-4 text-danger">{error}</p>;
 
-  const formatearNombre = (nombreCompleto) => {
-    const partes = nombreCompleto.trim().split(" ");
-    if (partes.length < 2) return nombreCompleto;
-    
-    
-    const apellidos = partes.slice(-2).join(" ");
-    const nombres = partes.slice(0, -2).join(" ");
-    return `${apellidos} ${nombres}`;
-  };
-  
-
   return (
     <Container>
       <Title>Estudiantes del Curso: {curso ? curso.Nombre_curso : "Desconocido"}</Title>
@@ -121,14 +121,14 @@ const EstudiantesCursoPage = () => {
       ) : (
         <List>
           {[...estudiantes]
-          .sort((a, b) => a.Nombre_formateado.localeCompare(b.Nombre_formateado))
+          .sort((a, b) => a.Nombre_formateado.localeCompare(b.Nombre_formateado))  // Ordenar por los apellidos
           .map((est) => (
             <ListItem key={est.ID_estudiante}>
-            <Link to={`/estudiante/${est.ID_estudiante}`}>
-            {est.Nombre_formateado}
-            </Link>
+              <Link to={`/estudiante/${est.ID_estudiante}`}>
+                {est.Nombre_formateado}
+              </Link>
             </ListItem>
-        ))}
+          ))}
         </List>
       )}
 
@@ -138,3 +138,4 @@ const EstudiantesCursoPage = () => {
 };
 
 export default EstudiantesCursoPage;
+
