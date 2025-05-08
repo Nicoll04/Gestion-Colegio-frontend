@@ -105,11 +105,13 @@ const EstudiantesCursoPage = () => {
         <p>No hay estudiantes registrados en este curso.</p>
       ) : (
         <List>
-          {estudiantes.map((est) => (
+          {[...estudiantes]
+          .sort((a, b) => a.Nombre_completo.localeCompare(b.Nombre_completo))
+          .map((est) => (
             <ListItem key={est.ID_estudiante}>
               <Link to={`/estudiante/${est.ID_estudiante}`}>{est.Nombre_completo}</Link>
             </ListItem>
-          ))}
+        ))}
         </List>
       )}
 
