@@ -49,7 +49,7 @@ const SeleccionarRolPage = () => {
                 <option value="">-- Seleccionar --</option>
                 <option value="admin">Admin</option>
                 <option value="coordinacion">Coordinación</option>
-                <option value="secretaria">Secretaría</option>
+                <option value="secretaria">Secretaria</option>
             </select>
             <button className="btn btn-primary" onClick={handleSeleccionar} disabled={!rolSeleccionado}>
                 Confirmar Rol

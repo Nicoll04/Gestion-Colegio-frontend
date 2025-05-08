@@ -28,19 +28,19 @@ const AppRoutes = () => {
 
         {/* Rutas protegidas */}
         <Route path="/dashboard" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaría"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria"]}>
             <Dashboard />
           </PrivateRoute>
         } />
 
         <Route path="/estudiantes" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaría"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria"]}>
             <EstudiantesPage />
           </PrivateRoute>
         } />
 
         <Route path="/familiares" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaría"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria"]}>
             <FamiliaresPage />
           </PrivateRoute>
         } />
@@ -52,7 +52,7 @@ const AppRoutes = () => {
         } />
 
         <Route path="/cursos" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaría"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria"]}>
             <CursosPage />
           </PrivateRoute>
         } />
@@ -64,7 +64,7 @@ const AppRoutes = () => {
         } />
 
         <Route path="/familiares/:id" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaría"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria"]}>
             <FamiliarDetailPage />
           </PrivateRoute>
         } />
@@ -76,7 +76,7 @@ const AppRoutes = () => {
         } />
 
         <Route path="/cursos/:id/estudiantes" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaría"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria"]}>
             <EstudiantesCursoPage />
           </PrivateRoute>
         } />
