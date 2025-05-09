@@ -89,14 +89,24 @@ const FamiliarDetailPage = () => {
     return <p className="text-center mt-4 text-danger">No se encontró información del familiar.</p>;
   }
 
+  console.log("Familiar encontrado:", familiar);
+
+
   return (
     <Container>
       <Title>Detalles del Familiar</Title>
       <DetailsGrid>
         {Object.entries(familiar).map(([key, value]) => (
           <ListItem key={key}>
-            <strong>{key.replace(/_/g, " ")}:</strong> {value}
-          </ListItem>
+          <strong>{key.replace(/_/g, " ")}:</strong>{" "}
+          {key.toLowerCase().includes("correo") ? (
+            <a href={`mailto:${value}`} style={{ color: colors.coral }}>
+              {value}
+            </a>
+          ) : (
+            value
+          )}
+        </ListItem>
         ))}
       </DetailsGrid>
       <BackButton onClick={() => window.history.back()}>🔙 Volver</BackButton>
