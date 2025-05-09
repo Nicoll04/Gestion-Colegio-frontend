@@ -157,7 +157,7 @@ const StudentDetailPage = () => {
           return (
             <ListItem key={key}>
               <strong>Correo:</strong>{" "}
-              <a href={`mailto:${value}`} style={{ color: colors.coral }}>
+              <a href={`mailto:${encodeURIComponent(value)}`} style={{ color: colors.coral }}>
                 {value}
               </a>
             </ListItem>
