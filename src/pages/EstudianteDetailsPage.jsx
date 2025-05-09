@@ -152,7 +152,7 @@ const StudentDetailPage = () => {
 
         if (key === "Foto") return null;
 
-        if (key === "Correo") {
+        if (key === "Correo_institucional") {
           console.log("Correo:", value);  
           return (
             <ListItem key={key}>
