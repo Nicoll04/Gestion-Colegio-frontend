@@ -16,10 +16,9 @@ const Container = styled.div`
   max-width: 1100px;
   margin: 40px auto;
   padding: 20px;
-  background: ${colors.seafoam};
-  border-radius: 10px;
+  background-color: ${colors.seafoam};
+  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
 `;
 
 const Title = styled.h2`
@@ -29,11 +28,12 @@ const Title = styled.h2`
 
 const Table = styled.table`
   width: 100%;
+  margin-top: 20px;
   border-collapse: collapse;
   background: white;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  table-layout: fixed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const Th = styled.th`
@@ -53,35 +53,17 @@ const Td = styled.td`
 `;
 
 const Button = styled.button`
-  padding: 6px 12px;
-  margin-left: 6px;
+  padding: 8px 12px;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   color: white;
-  font-size: 0.85rem;
   cursor: pointer;
-  background-color: ${(props) =>
-    props.$danger ? "#e74c3c" :
-    props.$warning ? "#f39c12" :
-    "#3498db"};
-  transition: background-color 0.3s;
-
+  margin: 4px;
+  background: ${(props) => (props.$danger ? "#d9534f" : props.$warning ? "#f0ad4e" : "#5bc0de")};
   &:hover {
-    background-color: ${(props) =>
-      props.$danger ? "#c0392b" :
-      props.$warning ? "#d68910" :
-      "#2980b9"};
-  }
-
-  &:first-child {
-    margin-left: 0;
-  }
-
-  &:focus {
-    outline: none;
+    opacity: 0.8;
   }
 `;
-
 
 const BackButton = styled.button`
   margin-top: 20px;
