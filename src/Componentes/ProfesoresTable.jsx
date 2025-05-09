@@ -53,25 +53,28 @@ const Td = styled.td`
 `;
 
 const Button = styled.button`
-  padding: 8px 14px;
-  margin: 0 6px;
+  padding: 6px 12px;
+  margin-left: 6px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
-  background: ${(props) =>
+  background-color: ${(props) =>
     props.$danger ? "#e74c3c" :
     props.$warning ? "#f39c12" :
     "#3498db"};
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s;
 
   &:hover {
-    background: ${(props) =>
+    background-color: ${(props) =>
       props.$danger ? "#c0392b" :
       props.$warning ? "#d68910" :
       "#2980b9"};
-    transform: scale(1.03);
+  }
+
+  &:first-child {
+    margin-left: 0;
   }
 
   &:focus {
@@ -171,7 +174,7 @@ const ProfesoresLista = () => {
                   <Td>{profesor.Celular}</Td>
                   <Td title={profesor.Correo_institucional}>{profesor.Correo_institucional}</Td>
                   <Td>
-                    <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", justifyContent: "center"}}>
                       <Button onClick={() => navigate(`/profesores/detalles/${profesor.ID_Profesores}`)}>
                         Detalles
                       </Button>
