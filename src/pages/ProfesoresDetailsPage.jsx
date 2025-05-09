@@ -104,26 +104,42 @@ const ProfesorDetalles = () => {
       {profesor.Foto && <ProfesorPhoto src={profesor.Foto} alt="Foto del profesor" />}
   
       <DetailsGrid>
-        {Object.entries(profesor).map(([key, value]) => {
-          if (key === "Foto") return null; 
-          
-          let displayValue = value;
+  {console.log("Campos del profesor:", profesor)}
+  {Object.entries(profesor).map(([key, value]) => {
+    if (key === "Foto") return null;
 
-          // Si es fecha válida, la mostramos como YYYY-MM-DD
-          if (key.toLowerCase().includes("fecha") && value) {
-            const date = new Date(value);
-            if (!isNaN(date.getTime())) {
-              displayValue = date.toISOString().split("T")[0];
-            }
-          }
+    let displayValue = value;
 
-          return (
-            <ListItem key={key}>
-              <strong>{key.replace("_", " ")}:</strong> {displayValue}
-            </ListItem>
-          );
-        })}
-      </DetailsGrid>
+    // Mostrar fecha formateada
+    if (key.toLowerCase().includes("fecha") && value) {
+      const date = new Date(value);
+      if (!isNaN(date.getTime())) {
+        displayValue = date.toISOString().split("T")[0];
+      }
+    }
+
+    // Si es un correo electrónico, mostrar como enlace a Gmail
+    if (key.toLowerCase().includes("correo") || key.toLowerCase().includes("email")) {
+      displayValue = (
+        <a
+          href={`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(value)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: colors.coral }}
+        >
+          {value}
+        </a>
+      );
+    }
+
+    return (
+      <ListItem key={key}>
+        <strong>{key.replace(/_/g, " ")}:</strong> {displayValue}
+      </ListItem>
+    );
+  })}
+</DetailsGrid>
+
   
       <BackButton onClick={() => window.history.back()}>🔙 Volver</BackButton>
     </Container>
