@@ -89,11 +89,13 @@ const StudentDetailPage = () => {
   }, [dispatch, students.length, cursos.length]);
 
   useEffect(() => {
-    if (students.length > 0) {
-      const foundStudent = students.find((s) => Number(s.ID_estudiante) === Number(id));
-      setStudent(foundStudent);
-    }
-  }, [students, id]);
+  if (students.length > 0) {
+    const foundStudent = students.find((s) => Number(s.ID_estudiante) === Number(id));
+    setStudent(foundStudent);
+    console.log("Estudiante encontrado:", foundStudent);  // Verifica el objeto completo
+  }
+}, [students, id]);
+
 
   if (loading) {
     return <p>Cargando información del estudiante...</p>;
@@ -151,7 +153,7 @@ const StudentDetailPage = () => {
         if (key === "Foto") return null;
 
         if (key === "Correo") {
-          console.log("Correo:", value);  // Esto te ayudará a verificar el valor del correo
+          console.log("Correo:", value);  
           return (
             <ListItem key={key}>
               <strong>Correo:</strong>{" "}
