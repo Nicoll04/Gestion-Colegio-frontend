@@ -151,6 +151,7 @@ const StudentDetailPage = () => {
         if (key === "Foto") return null;
 
         if (key === "Correo") {
+          console.log("Correo:", value);  // Esto te ayudará a verificar el valor del correo
           return (
             <ListItem key={key}>
               <strong>Correo:</strong>{" "}
