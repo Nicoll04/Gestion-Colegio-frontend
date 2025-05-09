@@ -92,7 +92,6 @@ const StudentDetailPage = () => {
   if (students.length > 0) {
     const foundStudent = students.find((s) => Number(s.ID_estudiante) === Number(id));
     setStudent(foundStudent);
-    console.log("Estudiante encontrado:", foundStudent);  // Verifica el objeto completo
   }
 }, [students, id]);
 
