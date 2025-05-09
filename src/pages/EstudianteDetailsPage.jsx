@@ -152,11 +152,15 @@ const StudentDetailPage = () => {
         if (key === "Foto") return null;
 
         if (key === "Correo_institucional") {
-          console.log("Correo:", value);  
           return (
             <ListItem key={key}>
               <strong>Correo:</strong>{" "}
-              <a href={`mailto:${encodeURIComponent(value)}`} style={{ color: colors.coral }}>
+              <a
+                href={`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(value)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: colors.coral }}
+              >
                 {value}
               </a>
             </ListItem>

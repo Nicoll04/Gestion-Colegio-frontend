@@ -100,7 +100,12 @@ const FamiliarDetailPage = () => {
           <ListItem key={key}>
           <strong>{key.replace(/_/g, " ")}:</strong>{" "}
           {key.toLowerCase().includes("email") ? (
-            <a href={`mailto:${value}`} style={{ color: colors.coral }}>
+            <a
+              href={`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(value)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: colors.coral }}
+            >
               {value}
             </a>
           ) : (
