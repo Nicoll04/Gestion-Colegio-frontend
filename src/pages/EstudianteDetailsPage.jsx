@@ -150,18 +150,16 @@ const StudentDetailPage = () => {
   
           if (key === "Foto") return null; 
   
+         if (key === "Correo") {
           return (
             <ListItem key={key}>
-              <strong>{key.replace("_", " ")}:</strong>{" "}
-              {typeof value === "string" && !isNaN(Date.parse(value)) && value.includes("T")
-                ? new Date(value).toLocaleDateString("es-ES", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  })
-                : value}
+              <strong>{key}:</strong>{" "}
+              <a href={`mailto:${value}`} style={{ color: colors.coral }}>
+                {value}
+              </a>
             </ListItem>
           );
+        }
         })}
       </DetailsGrid>
   
