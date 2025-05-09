@@ -99,7 +99,7 @@ const FamiliarDetailPage = () => {
         {Object.entries(familiar).map(([key, value]) => (
           <ListItem key={key}>
           <strong>{key.replace(/_/g, " ")}:</strong>{" "}
-          {key.toLowerCase().includes("correo") ? (
+          {key.toLowerCase().includes("Email") ? (
             <a href={`mailto:${value}`} style={{ color: colors.coral }}>
               {value}
             </a>
