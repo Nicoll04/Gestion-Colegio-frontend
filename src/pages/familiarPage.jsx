@@ -248,28 +248,6 @@ const FamiliaresPage = () => {
                   placeholder="Selecciona tipo de representante"
                   isClearable
                 />
-              ) : key === "Email" ? (
-                <>
-                  <Input
-                    type="email"
-                    name="Email"
-                    value={formData.Email}
-                    onChange={handleChange}
-                  />
-                  {formData.Email && (
-                    <a
-                      href={`mailto:${formData.Email}`}
-                      style={{
-                        display: "inline-block",
-                        marginTop: "6px",
-                        color: "#003B46",
-                        textDecoration: "underline",
-                      }}
-                    >
-                      {formData.Email}
-                    </a>
-                  )}
-                </>
               ) : (
                 <Input
                   type="text"
@@ -279,7 +257,7 @@ const FamiliaresPage = () => {
                 />
               )}
             </InputGroup>
-        ))}
+          ))}
         <FullWidth>
         <Button $primary type="submit" disabled={userRole !== "admin"}>
           {editingId ? "Actualizar Familiar" : "Agregar Familiar"}
