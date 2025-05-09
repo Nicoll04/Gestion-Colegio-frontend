@@ -231,40 +231,55 @@ const FamiliaresPage = () => {
             <InputGroup key={key}>
               <Label>{key.replace(/_/g, " ")}:</Label>
               {key === "Representante" ? (
-            <Select
-              options={[
-                { value: "Primero", label: "Primero" },
-                { value: "Segundo", label: "Segundo" },
-                { value: "Emergencia", label: "Emergencia" },
-              ]}
-              value={
-                formData.Representante
-                  ? { value: formData.Representante, label: formData.Representante }
-                  : null
-              }
-              onChange={(selectedOption) =>
-                setFormData((prev) => ({ ...prev, Representante: selectedOption.value }))
-              }
-              placeholder="Selecciona tipo de representante"
-              isClearable
-            />
-          ) : key === "Email" && formData[key] ? (
-            <a
-              href={`mailto:${formData[key]}`}
-              style={{ display: "inline-block", marginTop: "8px", color: "#003B46", textDecoration: "underline" }}
-            >
-              {formData[key]}
-            </a>
-          ) : (
-            <Input
-              type="text"
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
-            />
-          )}
+                <Select
+                  options={[
+                    { value: "Primero", label: "Primero" },
+                    { value: "Segundo", label: "Segundo" },
+                    { value: "Emergencia", label: "Emergencia" },
+                  ]}
+                  value={
+                    formData.Representante
+                      ? { value: formData.Representante, label: formData.Representante }
+                      : null
+                  }
+                  onChange={(selectedOption) =>
+                    setFormData((prev) => ({ ...prev, Representante: selectedOption.value }))
+                  }
+                  placeholder="Selecciona tipo de representante"
+                  isClearable
+                />
+              ) : key === "Email" ? (
+                <>
+                  <Input
+                    type="email"
+                    name="Email"
+                    value={formData.Email}
+                    onChange={handleChange}
+                  />
+                  {formData.Email && (
+                    <a
+                      href={`mailto:${formData.Email}`}
+                      style={{
+                        display: "inline-block",
+                        marginTop: "6px",
+                        color: "#003B46",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      {formData.Email}
+                    </a>
+                  )}
+                </>
+              ) : (
+                <Input
+                  type="text"
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleChange}
+                />
+              )}
             </InputGroup>
-          ))}
+        ))}
         <FullWidth>
         <Button $primary type="submit" disabled={userRole !== "admin"}>
           {editingId ? "Actualizar Familiar" : "Agregar Familiar"}

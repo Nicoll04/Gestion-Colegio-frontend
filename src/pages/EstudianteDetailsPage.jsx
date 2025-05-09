@@ -112,55 +112,68 @@ const StudentDetailPage = () => {
       {student.Foto && <StudentPhoto src={student.Foto} alt="Foto del estudiante" />}
   
       <DetailsGrid>
-        {Object.entries(student).map(([key, value]) => {
-          if (key === "familiares" && Array.isArray(value)) {
-            return (
-              <ListItem key={key} style={{ gridColumn: "span 2" }}>
-                <strong>Familiares:</strong>
-                <ul>
-                  {value.length > 0 ? (
-                    value.map((familiar, index) => (
-                      <li key={index}>
-                        {familiar.ID_Familiar ? (
-                          <Link to={`/familiares/${familiar.ID_Familiar}`}>
+       {Object.entries(student).map(([key, value]) => {
+        if (key === "familiares" && Array.isArray(value)) {
+          return (
+            <ListItem key={key} style={{ gridColumn: "span 2" }}>
+              <strong>Familiares:</strong>
+              <ul>
+                {value.length > 0 ? (
+                  value.map((familiar, index) => (
+                    <li key={index}>
+                      {familiar.ID_Familiar ? (
+                        <Link to={`/familiares/${familiar.ID_Familiar}`}>
                           {familiar.nombre_completo} ({familiar.representante})
                         </Link>
-                        ) : (
-                          <span>
-                            {familiar.nombre_completo} ({familiar.representante})
-                          </span>
-                        )}
-                      </li>
-                    ))
-                  ) : (
-                    <p>No hay familiares registrados.</p>
-                  )}
-                </ul>
-              </ListItem>
-            );
-          }
-  
-          if (key === "ID_Curso") {
-            return (
-              <ListItem key={key}>
-                <strong>Curso:</strong> {cursoNombre}
-              </ListItem>
-            );
-          }
-  
-          if (key === "Foto") return null; 
-  
-         if (key === "Correo") {
+                      ) : (
+                        <span>
+                          {familiar.nombre_completo} ({familiar.representante})
+                        </span>
+                      )}
+                    </li>
+                  ))
+                ) : (
+                  <p>No hay familiares registrados.</p>
+                )}
+              </ul>
+            </ListItem>
+          );
+        }
+
+        if (key === "ID_Curso") {
           return (
             <ListItem key={key}>
-              <strong>{key}:</strong>{" "}
+              <strong>Curso:</strong> {cursoNombre}
+            </ListItem>
+          );
+        }
+
+        if (key === "Foto") return null;
+
+        if (key === "Correo") {
+          return (
+            <ListItem key={key}>
+              <strong>Correo:</strong>{" "}
               <a href={`mailto:${value}`} style={{ color: colors.coral }}>
                 {value}
               </a>
             </ListItem>
           );
         }
-        })}
+
+        return (
+          <ListItem key={key}>
+            <strong>{key.replace(/_/g, " ")}:</strong>{" "}
+            {typeof value === "string" && !isNaN(Date.parse(value)) && value.includes("T")
+              ? new Date(value).toLocaleDateString("es-ES", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })
+              : value}
+          </ListItem>
+        );
+      })}
       </DetailsGrid>
   
       <BackButton onClick={() => window.history.back()}>🔙 Volver</BackButton>
