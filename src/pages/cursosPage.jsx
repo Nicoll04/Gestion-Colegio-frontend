@@ -121,7 +121,6 @@ const CursosPage = () => {
   const userRole = useSelector((state) => state.auth.rol);
   const [idProfesor, setIdProfesor] = useState("");
   const { profesores } = useSelector((state) => state.profesores);
-  console.log("Profesores en CursosPage:", profesores);
 
 
   useEffect(() => {
@@ -232,7 +231,7 @@ const CursosPage = () => {
                 <Td>{curso.Nombre_curso}</Td>
                 <Td>{curso.Grado}</Td>
                 <Td>
-                  {profesores.find((p) => p.ID_Profesores === curso.ID_Profesores)?.Nombre || "Sin asignar"}
+                  {profesores.find((p) => p.ID_Profesores === curso.ID_Profesores)?.Nombre_completo || "Sin asignar"}
                 </Td>
                 <Td>
                   <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
