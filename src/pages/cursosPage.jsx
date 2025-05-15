@@ -123,9 +123,9 @@ const CursosPage = () => {
   const { profesores } = useSelector((state) => state.profesores);
 
   useEffect(() => {
-  dispatch(fetchCursos());       
-  dispatch(fetchProfesores());   
-}, [dispatch]);
+    dispatch(fetchCursos());       
+    dispatch(fetchProfesores());   
+  }, [dispatch]);
 
   const handleVerEstudiantes = (idCurso) => {
     navigate(`/cursos/${idCurso}/estudiantes`);
@@ -133,16 +133,18 @@ const CursosPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const nuevoCurso = { Nombre_curso: nombreCurso, Grado: grado, ID_Profesor: idProfesor };
+    const nuevoCurso = {
+      Nombre_curso: nombreCurso,
+      Grado: grado,
+      ID_Profesor: idProfesor, 
+    };
+
     if (editingId) {
-      dispatch(updateCurso({ id: editingId, ...nuevoCurso })).then(() => {
-        dispatch(fetchCursos());
+      dispatch(updateCurso({ id: editingId, cursoData: nuevoCurso })).then(() => {
         setEditingId(null);
       });
     } else {
-      dispatch(addCurso(nuevoCurso)).then(() => {
-        dispatch(fetchCursos());
-      });
+      dispatch(addCurso(nuevoCurso));
     }
     setNombreCurso("");
     setGrado("Preescolar");
@@ -185,20 +187,19 @@ const CursosPage = () => {
           </Select>
         </div>
         <div>
-        <label>Profesor Director</label>
-        <Select value={idProfesor} onChange={(e) => setIdProfesor(e.target.value)} required>
-          <option value="">Selecciona un profesor</option>
-          {profesores.map((profesor) => (
-            <option key={profesor.ID_Profesores} value={profesor.ID_Profesores}>
-              {profesor.Nombre}
-            </option>
-          ))}
-        </Select>
-      </div>
+          <label>Profesor Director</label>
+          <Select value={idProfesor} onChange={(e) => setIdProfesor(e.target.value)} required>
+            <option value="">Selecciona un profesor</option>
+            {profesores.map((profesor) => (
+              <option key={profesor.ID_Profesores} value={profesor.ID_Profesores}>
+                {profesor.Nombre}
+              </option>
+            ))}
+          </Select>
+        </div>
         <Button $primary type="submit" style={{ marginTop: "10px" }} disabled={userRole !== "admin"}>
-        {editingId ? "Actualizar Curso" : "Agregar Curso"}
-      </Button>
-
+          {editingId ? "Actualizar Curso" : "Agregar Curso"}
+        </Button>
       </Form>
 
       {loading && <p>Cargando...</p>}
@@ -222,7 +223,7 @@ const CursosPage = () => {
                 <Td>{curso.Grado}</Td>
                 <Td>
                   {
-                    profesores.find((p) => p.ID_Profesores === curso.ID_Profesor)?.Nombre || "Sin asignar"
+                    profesores.find((p) => p.ID_Profesores === curso.ID_Profesores)?.Nombre || "Sin asignar"
                   }
                 </Td>
                 <Td>
@@ -230,21 +231,21 @@ const CursosPage = () => {
                     Ver Estudiantes
                   </Button>
                   {userRole === "admin" && (
-                  <>
-                    <Button
-                      $primary
-                      onClick={() => {
-                        setEditingId(curso.ID_Curso);
-                        setNombreCurso(curso.Nombre_curso);
-                        setGrado(curso.Grado);
-                        setIdProfesor(curso.ID_Profesor || ""); 
-                      }}
-                    >
-                      Editar
-                    </Button>
-                    <Button onClick={() => handleDelete(curso.ID_Curso)}>Eliminar</Button>
-                  </>
-                )}
+                    <>
+                      <Button
+                        $primary
+                        onClick={() => {
+                          setEditingId(curso.ID_Curso);
+                          setNombreCurso(curso.Nombre_curso);
+                          setGrado(curso.Grado);
+                          setIdProfesor(curso.ID_Profesores || "");
+                        }}
+                      >
+                        Editar
+                      </Button>
+                      <Button onClick={() => handleDelete(curso.ID_Curso)}>Eliminar</Button>
+                    </>
+                  )}
                 </Td>
               </tr>
             ))}
@@ -256,4 +257,3 @@ const CursosPage = () => {
 };
 
 export default CursosPage;
-
