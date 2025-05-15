@@ -111,6 +111,13 @@ const Td = styled.td`
   text-align: center;
 `;
 
+const ActionsContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  justify-content: center;
+`;
+
 const CursosPage = () => {
   const dispatch = useDispatch();
   const { cursos, loading, error } = useSelector((state) => state.cursos);
@@ -240,25 +247,27 @@ const handleSubmit = (e) => {
                   {profesores.find((p) => p.ID_Profesores === curso.ID_ProfesorDirector)?.Nombre_completo || "Sin asignar"}
                 </Td>
                 <Td>
-                  <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
-                    Ver Estudiantes
-                  </Button>
-                  {userRole === "admin" && (
-                    <>
-                      <Button
-                      $primary
-                      onClick={() => {
-                        setEditingId(curso.ID_Curso);
-                        setNombreCurso(curso.Nombre_curso);
-                        setGrado(curso.Grado);
-                        setIdProfesor(curso.ID_Profesores || "");  
-                      }}
-                    >
-                      Editar
+                <ActionsContainer>
+                    <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
+                      Ver Estudiantes
                     </Button>
-                      <Button onClick={() => handleDelete(curso.ID_Curso)}>Eliminar</Button>
-                    </>
-                  )}
+                    {userRole === "admin" && (
+                      <>
+                        <Button
+                          $primary
+                          onClick={() => {
+                            setEditingId(curso.ID_Curso);
+                            setNombreCurso(curso.Nombre_curso);
+                            setGrado(curso.Grado);
+                            setIdProfesor(curso.ID_Profesores || "");
+                          }}
+                        >
+                          Editar
+                        </Button>
+                        <Button onClick={() => handleDelete(curso.ID_Curso)}>Eliminar</Button>
+                      </>
+                    )}
+                  </ActionsContainer>
                 </Td>
               </tr>
             ))}
