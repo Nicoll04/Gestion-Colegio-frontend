@@ -119,7 +119,7 @@ const ActionsContainer = styled.div`
 `;
 
 const ActionButton = styled(Button)`
-  padding: 4px 8px;
+  padding: 10px 15px;
   font-size: 0.75rem;
 `;
 
