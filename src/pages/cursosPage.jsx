@@ -190,14 +190,18 @@ const CursosPage = () => {
         </div>
         <div>
           <label>Director de Curso</label>
-          <Select value={idProfesor} onChange={(e) => setIdProfesor(e.target.value)} required>
-            <option value="">Selecciona un profesor</option>
-            {profesores.map((profesor) => (
-              <option key={profesor.ID_Profesores} value={profesor.ID_Profesores}>
-                {profesor.Nombre}
-              </option>
-            ))}
-          </Select>
+          <Select
+          value={idProfesor}
+          onChange={(e) => setIdProfesor(e.target.value)}
+          required
+        >
+          <option value="">Selecciona un profesor</option>
+          {profesores.map((profesor) => (
+            <option key={profesor.ID_Profesores} value={profesor.ID_Profesores}>
+              {profesor.Nombre}
+            </option>
+          ))}
+        </Select>
         </div>
         <Button $primary type="submit" style={{ marginTop: "10px" }} disabled={userRole !== "admin"}>
           {editingId ? "Actualizar Curso" : "Agregar Curso"}
@@ -223,7 +227,9 @@ const CursosPage = () => {
                 <Td>{curso.ID_Curso}</Td>
                 <Td>{curso.Nombre_curso}</Td>
                 <Td>{curso.Grado}</Td>
-                <Td>{profesores.find((p) => p.ID_Profesores === curso.ID_Profesor)?.Nombre || "Sin asignar"}</Td>
+                <Td>
+                  {profesores.find((p) => p.ID_Profesores === curso.ID_Profesor)?.Nombre || "Sin asignar"}
+                </Td>
                 <Td>
                   <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
                     Ver Estudiantes
