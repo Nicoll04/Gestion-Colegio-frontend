@@ -223,11 +223,7 @@ const CursosPage = () => {
                 <Td>{curso.ID_Curso}</Td>
                 <Td>{curso.Nombre_curso}</Td>
                 <Td>{curso.Grado}</Td>
-                <Td>
-                  {
-                    profesores.find((p) => p.ID_Profesores === curso.ID_Profesores)?.Nombre || "Sin asignar"
-                  }
-                </Td>
+                <Td>{profesores.find((p) => p.ID_Profesores === curso.ID_Profesor)?.Nombre || "Sin asignar"}</Td>
                 <Td>
                   <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
                     Ver Estudiantes
