@@ -118,6 +118,11 @@ const ActionsContainer = styled.div`
   justify-content: center;
 `;
 
+const ActionButton = styled(Button)`
+  padding: 4px 8px;
+  font-size: 0.75rem;
+`;
+
 const CursosPage = () => {
   const dispatch = useDispatch();
   const { cursos, loading, error } = useSelector((state) => state.cursos);
@@ -246,29 +251,31 @@ const handleSubmit = (e) => {
                 <Td>
                   {profesores.find((p) => p.ID_Profesores === curso.ID_ProfesorDirector)?.Nombre_completo || "Sin asignar"}
                 </Td>
-                <Td>
+               <Td>
                 <ActionsContainer>
-                    <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
-                      Ver Estudiantes
-                    </Button>
-                    {userRole === "admin" && (
-                      <>
-                        <Button
-                          $primary
-                          onClick={() => {
-                            setEditingId(curso.ID_Curso);
-                            setNombreCurso(curso.Nombre_curso);
-                            setGrado(curso.Grado);
-                            setIdProfesor(curso.ID_Profesores || "");
-                          }}
-                        >
-                          Editar
-                        </Button>
-                        <Button onClick={() => handleDelete(curso.ID_Curso)}>Eliminar</Button>
-                      </>
-                    )}
-                  </ActionsContainer>
-                </Td>
+                  <ActionButton $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
+                    Ver
+                  </ActionButton>
+                  {userRole === "admin" && (
+                    <>
+                      <ActionButton
+                        $primary
+                        onClick={() => {
+                          setEditingId(curso.ID_Curso);
+                          setNombreCurso(curso.Nombre_curso);
+                          setGrado(curso.Grado);
+                          setIdProfesor(curso.ID_Profesores || "");
+                        }}
+                      >
+                        Editar
+                      </ActionButton>
+                      <ActionButton onClick={() => handleDelete(curso.ID_Curso)}>
+                        Eliminar
+                      </ActionButton>
+                    </>
+                  )}
+                </ActionsContainer>
+              </Td>
               </tr>
             ))}
           </tbody>
