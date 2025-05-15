@@ -75,12 +75,10 @@ const EstudiantesCursoPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Esta función formatea el nombre, poniendo los apellidos primero
   const formatearNombre = (nombreCompleto) => {
     const partes = nombreCompleto.trim().split(" ");
     if (partes.length < 2) return nombreCompleto;
-    
-    // Asumimos que los últimos dos son apellidos y el resto son nombres
+
     const apellidos = partes.slice(-2).join(" ");
     const nombres = partes.slice(0, -2).join(" ");
     return `${apellidos} ${nombres}`;

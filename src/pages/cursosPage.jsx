@@ -132,25 +132,31 @@ const CursosPage = () => {
     navigate(`/cursos/${idCurso}/estudiantes`);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const nuevoCurso = {
-      Nombre_curso: nombreCurso,
-      Grado: grado,
-      ID_Profesor: idProfesor, 
-    };
-
-    if (editingId) {
-      dispatch(updateCurso({ id: editingId, cursoData: nuevoCurso })).then(() => {
-        setEditingId(null);
-      });
-    } else {
-      dispatch(addCurso(nuevoCurso));
-    }
-    setNombreCurso("");
-    setGrado("Preescolar");
-    setIdProfesor("");
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const nuevoCurso = {
+    Nombre_curso: nombreCurso,
+    Grado: grado,
+    ID_Profesor: idProfesor,
   };
+
+  if (editingId) {
+    dispatch(updateCurso({ id: editingId, cursoData: nuevoCurso }))
+      .then(() => {
+        setEditingId(null);
+        dispatch(fetchCursos()); 
+      });
+  } else {
+    dispatch(addCurso(nuevoCurso))
+      .then(() => {
+        dispatch(fetchCursos()); 
+      });
+  }
+
+  setNombreCurso("");
+  setGrado("Preescolar");
+  setIdProfesor("");
+};
 
   const handleDelete = (id) => {
     const confirmDelete = window.confirm("¿Seguro que quieres eliminar este curso?");
