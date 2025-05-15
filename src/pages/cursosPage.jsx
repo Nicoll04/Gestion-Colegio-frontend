@@ -121,6 +121,8 @@ const CursosPage = () => {
   const userRole = useSelector((state) => state.auth.rol);
   const [idProfesor, setIdProfesor] = useState("");
   const { profesores } = useSelector((state) => state.profesores);
+  console.log("Profesores en CursosPage:", profesores);
+
 
   useEffect(() => {
     dispatch(fetchCursos());       
@@ -187,7 +189,7 @@ const CursosPage = () => {
           </Select>
         </div>
         <div>
-          <label>Profesor Director</label>
+          <label>Director de Curso</label>
           <Select value={idProfesor} onChange={(e) => setIdProfesor(e.target.value)} required>
             <option value="">Selecciona un profesor</option>
             {profesores.map((profesor) => (
@@ -211,7 +213,7 @@ const CursosPage = () => {
               <Th>ID</Th>
               <Th>Nombre del Curso</Th>
               <Th>Grado</Th>
-              <Th>Profesor Director</Th>
+              <Th>Director de Curso</Th>
               <Th>Acciones</Th>
             </tr>
           </thead>
