@@ -135,10 +135,10 @@ const CursosPage = () => {
 const handleSubmit = (e) => {
   e.preventDefault();
   const nuevoCurso = {
-    Nombre_curso: nombreCurso,
-    Grado: grado,
-    ID_Profesor: idProfesor,
-  };
+  Nombre_curso: nombreCurso,
+  Grado: grado,
+  ID_ProfesorDirector: idProfesor,
+};
 
   if (editingId) {
     dispatch(updateCurso({ id: editingId, cursoData: nuevoCurso }))
@@ -237,7 +237,7 @@ const handleSubmit = (e) => {
                 <Td>{curso.Nombre_curso}</Td>
                 <Td>{curso.Grado}</Td>
                 <Td>
-                  {profesores.find((p) => p.ID_Profesores === curso.ID_Profesores)?.Nombre_completo || "Sin asignar"}
+                  {profesores.find((p) => p.ID_Profesores === curso.ID_ProfesorDirector)?.Nombre_completo || "Sin asignar"}
                 </Td>
                 <Td>
                   <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
