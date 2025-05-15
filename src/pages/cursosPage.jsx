@@ -201,7 +201,7 @@ const CursosPage = () => {
           ) : (
             profesores.map((profesor) => (
               <option key={profesor.ID_Profesores} value={profesor.ID_Profesores}>
-                {profesor.Nombre}
+                {profesor.Nombre_completo}
               </option>
             ))
           )}
