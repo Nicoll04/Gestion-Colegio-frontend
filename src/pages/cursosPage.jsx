@@ -190,17 +190,21 @@ const CursosPage = () => {
         </div>
         <div>
           <label>Director de Curso</label>
-          <Select
+        <Select
           value={idProfesor}
           onChange={(e) => setIdProfesor(e.target.value)}
           required
         >
           <option value="">Selecciona un profesor</option>
-          {profesores.map((profesor) => (
-            <option key={profesor.ID_Profesores} value={profesor.ID_Profesores}>
-              {profesor.Nombre}
-            </option>
-          ))}
+          {profesores.length === 0 ? (
+            <option disabled>Cargando profesores...</option>
+          ) : (
+            profesores.map((profesor) => (
+              <option key={profesor.ID_Profesores} value={profesor.ID_Profesores}>
+                {profesor.Nombre}
+              </option>
+            ))
+          )}
         </Select>
         </div>
         <Button $primary type="submit" style={{ marginTop: "10px" }} disabled={userRole !== "admin"}>
@@ -228,7 +232,7 @@ const CursosPage = () => {
                 <Td>{curso.Nombre_curso}</Td>
                 <Td>{curso.Grado}</Td>
                 <Td>
-                  {profesores.find((p) => p.ID_Profesores === curso.ID_Profesor)?.Nombre || "Sin asignar"}
+                  {profesores.find((p) => p.ID_Profesores === curso.ID_Profesores)?.Nombre || "Sin asignar"}
                 </Td>
                 <Td>
                   <Button $primary onClick={() => handleVerEstudiantes(curso.ID_Curso)}>
@@ -237,16 +241,16 @@ const CursosPage = () => {
                   {userRole === "admin" && (
                     <>
                       <Button
-                        $primary
-                        onClick={() => {
-                          setEditingId(curso.ID_Curso);
-                          setNombreCurso(curso.Nombre_curso);
-                          setGrado(curso.Grado);
-                          setIdProfesor(curso.ID_Profesores || "");
-                        }}
-                      >
-                        Editar
-                      </Button>
+                      $primary
+                      onClick={() => {
+                        setEditingId(curso.ID_Curso);
+                        setNombreCurso(curso.Nombre_curso);
+                        setGrado(curso.Grado);
+                        setIdProfesor(curso.ID_Profesores || "");  
+                      }}
+                    >
+                      Editar
+                    </Button>
                       <Button onClick={() => handleDelete(curso.ID_Curso)}>Eliminar</Button>
                     </>
                   )}
