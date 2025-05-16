@@ -10,33 +10,43 @@ const SeleccionarRolPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch(); 
 
+  
     const handleSeleccionar = async () => {
-        try {
-            const token = localStorage.getItem("token");
+    try {
+        const token = localStorage.getItem("token");
 
-            const res = await API.post("/auth/asignar-rol", { Rol: rolSeleccionado }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            if (res.data.token) {
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("userRole", res.data.Rol);
-
-                dispatch(setAuth({
-                    token: res.data.token,
-                    rol: res.data.Rol,
-                    nombre: res.data.nombre || null
-                }));
-
-                navigate("/dashboard");
-            }
-        } catch (error) {
-            console.error("Error asignando rol:", error);
-            alert("No se pudo asignar el rol.");
+        if (!token) {
+            alert("No se encontró el token. Vuelve a iniciar sesión.");
+            navigate("/login");
+            return;
         }
-    };
+
+        const res = await API.post("/auth/asignar-rol", { Rol: rolSeleccionado }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (res.data.token) {
+            const rol = res.data.Rol || res.data.rol;
+
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("userRole", rol);
+
+            dispatch(setAuth({
+                token: res.data.token,
+                rol: rol,
+                nombre: res.data.nombre || null
+            }));
+
+            navigate("/dashboard");
+        }
+    } catch (error) {
+        console.error("Error asignando rol:", error);
+        alert("No se pudo asignar el rol.");
+    }
+};
+
 
     return (
         <div className="container mt-5">
@@ -50,6 +60,7 @@ const SeleccionarRolPage = () => {
                 <option value="admin">Admin</option>
                 <option value="coordinacion">Coordinación</option>
                 <option value="secretaria">Secretaria</option>
+                <option value="orientacion">Orientación</option>
                 <option value="profesor">Profesor</option>
             </select>
             <button className="btn btn-primary" onClick={handleSeleccionar} disabled={!rolSeleccionado}>
