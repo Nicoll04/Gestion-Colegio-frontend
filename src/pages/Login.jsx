@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../store/slices/authSlice";
+import { loginUser, loginWithGoogle } from "../store/slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import "../assets/Login.css";
-
 import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
@@ -13,7 +12,6 @@ const Login = () => {
     const navigate = useNavigate();
     const { loading, error } = useSelector((state) => state.auth);
 
-    // Recuperar correo guardado al cargar el componente
     useEffect(() => {
         const savedEmail = localStorage.getItem("userEmail");
         if (savedEmail) {
@@ -34,34 +32,21 @@ const Login = () => {
     const handleGoogleLogin = async (credentialResponse) => {
         const googleToken = credentialResponse.credential;
 
-        try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/google-token`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ credential: googleToken }),
-            });
+        const res = await dispatch(loginWithGoogle(googleToken));
 
-            const data = await res.json();
+        if (res.meta.requestStatus === "fulfilled") {
+            const { rol, correo } = res.payload;
 
-            if (data.token) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("userName", data.nombre);
-                if (data.correo) {
-                    localStorage.setItem("userEmail", data.correo); // Guardar correo de Google
-                }
-
-                if (!data.rol) {
-                    navigate("/seleccionar-rol");
-                } else {
-                    localStorage.setItem("userRole", data.rol);
-                    navigate("/dashboard");
-                }
+            if (correo) {
+                localStorage.setItem("userEmail", correo);
             }
 
-        } catch (error) {
-            console.error("Error Google login:", error);
+            if (!rol) {
+                navigate("/seleccionar-rol");
+            } else {
+                navigate("/dashboard");
+            }
+        } else {
             alert("Fallo el inicio de sesión con Google");
         }
     };

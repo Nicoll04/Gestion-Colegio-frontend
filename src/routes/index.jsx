@@ -46,7 +46,7 @@ const AppRoutes = () => {
         } />
 
         <Route path="/profesores" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","profesor","orientacion"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion"]}>
             <ProfesoresPage />
           </PrivateRoute>
         } />
@@ -70,7 +70,7 @@ const AppRoutes = () => {
         } />
 
         <Route path="/profesores/detalles/:id" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","profesor","orientacion"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion"]}>
             <ProfesorDetailPage />
           </PrivateRoute>
         } />
@@ -82,19 +82,19 @@ const AppRoutes = () => {
         } />
 
         <Route path="/estudiantes/registrados" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","profesor","orientacion"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion"]}>
             <StudentTable />
           </PrivateRoute>
         } />
 
         <Route path="/tabla-familiares" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","profesor","orientacion"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion"]}>
             <FamiliaresTable />
           </PrivateRoute>
         } />
 
         <Route path="/profesores-lista" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","profesor","orientacion"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion"]}>
             <ProfesoresLista />
           </PrivateRoute>
         } />
