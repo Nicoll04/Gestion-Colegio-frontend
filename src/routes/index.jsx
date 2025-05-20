@@ -46,7 +46,7 @@ const AppRoutes = () => {
         } />
 
         <Route path="/profesores" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion","profesor"]}>
             <ProfesoresPage />
           </PrivateRoute>
         } />
@@ -94,7 +94,7 @@ const AppRoutes = () => {
         } />
 
         <Route path="/profesores-lista" element={
-          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion"]}>
+          <PrivateRoute allowedRoles={["admin", "coordinacion", "secretaria","orientacion","profesor"]}>
             <ProfesoresLista />
           </PrivateRoute>
         } />
