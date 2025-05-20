@@ -12,7 +12,19 @@ const PrivateRoute = ({ children, allowedRoles }) => {
 
     try {
         const decodedToken = jwtDecode(token);
-        console.log("Decoded token:", decodedToken);
+        console.log("✅ Decoded token:", decodedToken);
+
+        // 🔍 Validación de expiración
+        const currentTime = Date.now() / 1000;
+        console.log("⏳ Exp:", new Date(decodedToken.exp * 1000));
+        console.log("🕒 Now:", new Date());
+
+        if (decodedToken.exp < currentTime) {
+            console.warn("⚠️ Token expirado. Cerrando sesión...");
+            localStorage.clear();
+            sessionStorage.clear();
+            return <Navigate to="/" />;
+        }
 
         const userRole = decodedToken.Rol || decodedToken.rol || decodedToken.role;
 
@@ -24,9 +36,10 @@ const PrivateRoute = ({ children, allowedRoles }) => {
         return children;
     } catch (error) {
         console.error("🔴 Error al decodificar el token:", error);
+        localStorage.clear();
+        sessionStorage.clear();
         return <Navigate to="/" />;
     }
 };
-
 
 export default PrivateRoute;
