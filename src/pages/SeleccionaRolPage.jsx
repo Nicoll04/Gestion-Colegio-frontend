@@ -39,8 +39,12 @@ const SeleccionarRolPage = () => {
                 nombre: res.data.nombre || null
             }));
 
-            navigate("/dashboard");
+            // ⏳ Espera brevemente antes de redirigir
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 100); // Puedes ajustar a 200ms si ves que persiste el problema
         }
+
     } catch (error) {
         console.error("Error asignando rol:", error);
         alert("No se pudo asignar el rol.");
