@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+console.log("jwtDecode importado:", jwtDecode);
 
 const PrivateRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
