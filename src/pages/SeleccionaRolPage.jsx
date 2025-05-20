@@ -33,16 +33,17 @@ const SeleccionarRolPage = () => {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("userRole", rol);
 
+            console.log("Token guardado:", localStorage.getItem("token"));  // <-- aquí
+
             dispatch(setAuth({
                 token: res.data.token,
                 rol: rol,
                 nombre: res.data.nombre || null
             }));
 
-            // ⏳ Espera brevemente antes de redirigir
             setTimeout(() => {
                 navigate("/dashboard");
-            }, 100); // Puedes ajustar a 200ms si ves que persiste el problema
+            }, 200);
         }
 
     } catch (error) {

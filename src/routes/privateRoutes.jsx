@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 
 const PrivateRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
@@ -11,7 +11,9 @@ const PrivateRoute = ({ children, allowedRoles }) => {
 
     try {
         const decodedToken = jwtDecode(token);
-        const userRole = decodedToken.Rol; 
+        console.log("Decoded token:", decodedToken);
+
+        const userRole = decodedToken.Rol || decodedToken.rol || decodedToken.role;
 
         if (!allowedRoles.includes(userRole)) {
             console.warn("🔴 Acceso denegado para el rol:", userRole);
@@ -24,5 +26,6 @@ const PrivateRoute = ({ children, allowedRoles }) => {
         return <Navigate to="/" />;
     }
 };
+
 
 export default PrivateRoute;
